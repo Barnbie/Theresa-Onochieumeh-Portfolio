@@ -1,0 +1,1745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumispend - Expense Tracker App Case Study | Theresa Onochieumeh</title>
+    <link href="https://fonts.googleapis.com/css2?family=Martel+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Martel Sans', 'Segoe UI', sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation - Dark theme matching work.html */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 5%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff1493, #1e3a8a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 3rem;
+        }
+        
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        nav a:hover, nav a.active {
+            color: #ff1493;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 120px 5% 80px;
+            background: linear-gradient(135deg, #0024CA 0%, #02C0B0 50%, #FF1097 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.08) 0%, transparent 50%);
+            opacity: 0.5;
+        }
+        
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+        }
+        
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .project-meta {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .meta-item {
+            text-align: center;
+        }
+        
+        .meta-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .meta-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        /* Hero Image */
+        .hero-image {
+            margin-top: 4rem;
+            padding: 0 5%;
+        }
+        
+        .placeholder-hero {
+            width: 100%;
+            max-width: 1200px;
+            height: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Content Sections */
+        .content-section {
+            padding: 100px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #FF1493;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 3rem;
+            max-width: 800px;
+            line-height: 1.8;
+        }
+        
+        /* Overview Section */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        
+        .overview-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border-left: 4px solid #FF1493;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+        
+        .overview-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.1);
+        }
+        
+        .overview-card h3 {
+            color: #FF1493;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .overview-card p {
+            color: #555;
+            line-height: 1.8;
+        }
+        
+        /* Design Goals */
+        .design-goals {
+            padding: 100px 5%;
+            background: #f8f9fa;
+        }
+        
+        .goals-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .goals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+        
+        .goal-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .goal-card:hover {
+            border-color: #FF1493;
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(255, 20, 147, 0.15);
+        }
+        
+        .goal-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #0024CA 0%, #02C0B0 50%, #FF1097 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2.5rem;
+        }
+        
+        .goal-card h3 {
+            color: #FF1493;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        
+        .goal-card p {
+            color: #555;
+            line-height: 1.8;
+        }
+        
+        /* Design Process */
+        .design-process {
+            padding: 100px 5%;
+            background: white;
+        }
+        
+        .process-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .process-placeholder {
+            width: 100%;
+            max-width: 1200px;
+            height: 500px;
+            margin: 3rem auto;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            gap: 1rem;
+        }
+        
+        .process-placeholder span {
+            font-size: 1rem;
+            color: #bbb;
+        }
+        
+        /* Challenge & Solution */
+        .challenge-solution {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 100px 5%;
+        }
+        
+        .challenge-solution-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 4rem;
+        }
+        
+        .challenge-box, .solution-box {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .challenge-box h2, .solution-box h2 {
+            color: #FF1493;
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+        }
+        
+        .challenge-box p, .solution-box p {
+            color: #555;
+            line-height: 1.9;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .challenge-box ul, .solution-box ul {
+            margin-top: 1.5rem;
+            list-style: none;
+        }
+        
+        .challenge-box li, .solution-box li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            color: #555;
+            line-height: 1.7;
+        }
+        
+        .challenge-box li::before {
+            content: '✗';
+            position: absolute;
+            left: 0;
+            color: #ff4757;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .solution-box li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #FF1493;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        /* User Personas */
+        .user-personas {
+            padding: 100px 5%;
+            background: white;
+        }
+        
+        .personas-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .personas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        
+        .persona-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e9ecef;
+        }
+        
+        .persona-header {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            align-items: center;
+        }
+        
+        .persona-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0024CA 0%, #02C0B0 50%, #FF1097 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            flex-shrink: 0;
+        }
+        
+        .persona-info h3 {
+            color: #FF1493;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        .persona-info .persona-role {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .persona-info .persona-meta {
+            color: #999;
+            font-size: 0.95rem;
+        }
+        
+        .persona-section {
+            margin-top: 2rem;
+        }
+        
+        .persona-section h4 {
+            color: #0024CA;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .persona-section h4::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: #0024CA;
+            border-radius: 2px;
+        }
+        
+        .persona-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .persona-section li {
+            padding: 0.6rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: #555;
+            line-height: 1.7;
+        }
+        
+        .persona-section li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #FF1493;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .persona-quote {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1.5rem;
+            border-left: 4px solid #FF1493;
+            font-style: italic;
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        /* Empathy Mapping */
+        .empathy-mapping {
+            padding: 100px 5%;
+            background: #f8f9fa;
+        }
+        
+        .empathy-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .empathy-map {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        }
+        
+        .empathy-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .empathy-header h3 {
+            color: #FF1493;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        .empathy-header p {
+            color: #666;
+        }
+        
+        .empathy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 2rem;
+            position: relative;
+            min-height: 600px;
+        }
+        
+        .empathy-center-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0024CA 0%, #02C0B0 50%, #FF1097 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            box-shadow: 0 10px 40px rgba(255, 20, 147, 0.3);
+            border: 8px solid white;
+            z-index: 10;
+        }
+        
+        .empathy-quadrant {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid #e9ecef;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .empathy-quadrant.says {
+            grid-column: 1;
+            grid-row: 1;
+        }
+        
+        .empathy-quadrant.thinks {
+            grid-column: 2;
+            grid-row: 1;
+        }
+        
+        .empathy-quadrant.does {
+            grid-column: 1;
+            grid-row: 2;
+        }
+        
+        .empathy-quadrant.feels {
+            grid-column: 2;
+            grid-row: 2;
+        }
+        
+        .empathy-quadrant h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .empathy-quadrant.says h4 { color: #FF1493; }
+        .empathy-quadrant.thinks h4 { color: #0024CA; }
+        .empathy-quadrant.does h4 { color: #ff6b6b; }
+        .empathy-quadrant.feels h4 { color: #ffa502; }
+        
+        .empathy-quadrant ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .empathy-quadrant li {
+            padding: 0.6rem 0;
+            color: #555;
+            line-height: 1.6;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.95rem;
+        }
+        
+        .empathy-quadrant li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #999;
+        }
+        
+        /* User Flow Section */
+        .user-flow {
+            padding: 100px 5%;
+            background: white;
+        }
+        
+        .flow-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .placeholder-flow {
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #999;
+            border: 2px dashed #ddd;
+            margin-bottom: 2rem;
+        }
+        
+        .flow-description {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .flow-description h3 {
+            color: #FF1493;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .flow-description p {
+            color: #555;
+            line-height: 1.8;
+        }
+        
+        /* Design System */
+        .design-system {
+            padding: 100px 5%;
+            background: #f8f9fa;
+        }
+        
+        .design-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .colors-section, .typography-section {
+            margin: 4rem 0;
+        }
+        
+        .colors-section h3, .typography-section h3 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+            position: relative;
+            padding-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .colors-section h3::after, .typography-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #0024CA 0%, #02C0B0 50%, #FF1097 100%);
+            border-radius: 2px;
+        }
+        
+        .colors-section > p, .typography-section > p {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        
+        .colors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .color-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .color-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .color-preview {
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .color-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .color-name {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #1a1a1a;
+            font-size: 1.1rem;
+        }
+        
+        .color-usage {
+            color: #666;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+        
+        .typography-showcase {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            font: poppins;
+        }
+        
+        /* Key Features */
+        .key-features {
+            padding: 100px 5%;
+            background: white;
+        }
+        
+        .features-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .feature-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            margin-bottom: 6rem;
+            align-items: center;
+        }
+        
+        .feature-item:nth-child(even) {
+            direction: rtl;
+        }
+        
+        .feature-item:nth-child(even) > * {
+            direction: ltr;
+        }
+        
+        .feature-text h3 {
+            font-size: 2rem;
+            color: #FF1493;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .feature-text p {
+            color: #555;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        .placeholder-feature {
+            width: 100%;
+            height: 600px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+        
+        /* UI Screens */
+        .ui-screens {
+            padding: 100px 5%;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        
+        .screens-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .screens-category {
+            margin-bottom: 5rem;
+        }
+        
+        .screens-category h3 {
+            font-size: 2rem;
+            color: #FF1493;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 700;
+        }
+        
+        .screens-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .screen-card {
+            background: #e4f0ff;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .screen-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .placeholder-screen {
+            width: 100%;
+            height: 600px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .screen-name {
+            text-align: center;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+        
+        /* Outcomes */
+        .outcomes {
+            padding: 100px 5%;
+            background: white;
+        }
+        
+        .outcomes-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .outcomes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin: 4rem 0;
+        }
+        
+        .outcome-stat {
+            padding: 2rem;
+        }
+        
+        .outcome-number {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0024CA 0%, #02C0B0 50%, #FF1097 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        
+        .outcome-label {
+            color: #555;
+            font-size: 1.1rem;
+        }
+        
+        .reflection {
+            background: #f8f9fa;
+            padding: 3rem;
+            border-radius: 20px;
+            margin-top: 4rem;
+            border-left: 4px solid #FF1493;
+            text-align: left;
+        }
+        
+        .reflection h3 {
+            color: #FF1493;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .reflection p {
+            color: #555;
+            line-height: 1.9;
+            font-size: 1.1rem;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 5%;
+            background: linear-gradient(135deg, #0024CA 0%, #02C0B0 50%, #FF1097 100%);;
+            color: white;
+            text-align: center;
+        }
+        
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cta-section h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: #FF1493;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: #FF1493;
+        }
+        
+        /* Footer - Matching work.html */
+        footer {
+            padding: 3rem 5%;
+            background: #111111;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+        
+        .footer-section h3 {
+            color: #ff1493;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-section p {
+            color: #808080;
+        }
+        
+        .footer-section a {
+            color: #808080;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: #ff1493;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .challenge-solution-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .personas-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .feature-item {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .feature-item:nth-child(even) {
+                direction: ltr;
+            }
+            
+            nav ul {
+                gap: 1.5rem;
+            }
+            
+            .empathy-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+                min-height: auto;
+            }
+            
+            .empathy-center-image {
+                position: relative;
+                top: auto;
+                left: auto;
+                transform: none;
+                margin: 2rem auto;
+            }
+            
+            .empathy-quadrant.says,
+            .empathy-quadrant.thinks,
+            .empathy-quadrant.does,
+            .empathy-quadrant.feels {
+                grid-column: 1;
+                grid-row: auto;
+            }
+        }
+        
+        /* Fade in animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="work.html" class="logo">Theresa .O. Onochieumeh</a>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="work.html">Work</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Lumispend</h1>
+            <p>AI-Powered Expense Tracker That Makes Financial Management Effortless</p>
+            
+            <div class="project-meta">
+                <div class="meta-item">
+                    <div class="meta-label">Role</div>
+                    <div class="meta-value">Product Designer & Developer</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Duration</div>
+                    <div class="meta-value">2 Months</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Platform</div>
+                    <div class="meta-value">iOS & Android</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Tools</div>
+                    <div class="meta-value">Figma, React Native, AI</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="hero-image">
+            <div class="placeholder-hero"><img src="images/lumispend-hero.png" alt="lumispend hero" class="placeholder-hero"></div>
+        </div>
+    </section>
+
+    <!-- Project Overview -->
+    <section class="content-section">
+        <h2 class="section-title">Project Overview</h2>
+        <p class="section-subtitle">Lumispend is an intelligent expense tracking application that eliminates the friction of manual data entry through AI-powered voice recognition and receipt scanning, making financial management truly effortless.</p>
+        
+        <div class="overview-grid">
+            <div class="overview-card fade-in">
+                <h3>What is Lumispend?</h3>
+                <p>Lumispend is a personal finance app that tracks expenses and income with unprecedented ease. Using AI technology, users can add transactions via voice commands or by simply scanning receipts, removing the tedious manual entry that makes people abandon expense trackers.</p>
+            </div>
+            
+            <div class="overview-card fade-in">
+                <h3>The Opportunity</h3>
+                <p>Most expense tracker apps fail because they require too much effort from users. Every transaction means stopping what you're doing to manually type details. This friction causes abandonment. Lumispend solves this with AI-powered input methods that take seconds, not minutes.</p>
+            </div>
+            
+            <div class="overview-card fade-in">
+                <h3>My Role</h3>
+                <p>As the Product Designer and Developer, I handled the complete product lifecycle from user research and interface design to building the mobile app with React Native and integrating AI features for voice recognition and OCR receipt scanning.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design Goals -->
+    <section class="design-goals">
+        <div class="goals-container">
+            <h2 class="section-title">Design Goals</h2>
+            <p class="section-subtitle">Strategic objectives focused on removing friction and making expense tracking a habit, not a chore.</p>
+            
+            <div class="goals-grid">
+                <div class="goal-card fade-in">
+                    <div class="goal-icon">⚡</div>
+                    <h3>Eliminate Data Entry Friction</h3>
+                    <p>Design input methods that take seconds, not minutes. Voice entry and receipt scanning should feel faster than buying the item itself.</p>
+                </div>
+                
+                <div class="goal-card fade-in">
+                    <div class="goal-icon">🎯</div>
+                    <h3>Make Tracking Addictive</h3>
+                    <p>Create an experience so smooth and rewarding that users actually want to track expenses rather than avoiding it.</p>
+                </div>
+                
+                <div class="goal-card fade-in">
+                    <div class="goal-icon">📊</div>
+                    <h3>Provide Actionable Insights</h3>
+                    <p>Transform raw data into clear, visual insights that help users understand and improve their spending patterns.</p>
+                </div>
+                
+                <div class="goal-card fade-in">
+                    <div class="goal-icon">🌓</div>
+                    <h3>Comfort in Every Light</h3>
+                    <p>Offer both light and dark modes to ensure comfortable use in any lighting condition, day or night.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design Process -->
+    <section class="design-process">
+        <div class="process-container">
+            <h2 class="section-title">Design Process</h2>
+            <p class="section-subtitle">A user-centered approach from problem discovery to solution implementation.</p>
+            
+            <div class="process-placeholder"><img src="images/design-process-lumispend.PNG" alt="design process" class="process-placeholder"></div>
+                Design Process 
+                <span>(Research → Define → Ideate → Wireframe → Design → Iterate → Prototype → Test)</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Challenge & Solution -->
+    <section class="challenge-solution">
+        <div class="challenge-solution-content">
+            <div class="challenge-box fade-in">
+                <h2>The Challenge</h2>
+                <p>Why do people abandon expense tracker apps?</p>
+                <ul>
+                    <li>Manual data entry feels like work - too time-consuming after every purchase</li>
+                    <li>Breaking momentum - pulling out phone to type kills the convenience of mobile payments</li>
+                    <li>Forgotten transactions - by the time users get home, they've forgotten half their spending</li>
+                    <li>Category fatigue - deciding which category for each expense creates decision paralysis</li>
+                    <li>No immediate value - effort required upfront, insights come much later</li>
+                </ul>
+            </div>
+            
+            <div class="solution-box fade-in">
+                <h2>The Solution</h2>
+                <p>AI-powered input that makes tracking effortless:</p>
+                <ul>
+                    <li>Voice Entry - Speak your transaction naturally, AI extracts all details automatically</li>
+                    <li>Receipt Scanning - Snap a photo of receipts, OCR technology extracts and categorizes everything</li>
+                    <li>Home Screen Widgets - Add transactions without opening the app</li>
+                    <li>Calendar View - Visual timeline shows spending patterns at a glance</li>
+                    <li>Smart Categorization - AI suggests categories based on merchant names and patterns</li>
+                    <li>Budget Alerts - Real-time progress bars show spending against monthly budgets</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Personas -->
+    <section class="user-personas">
+        <div class="personas-container">
+            <h2 class="section-title">User Persona</h2>
+            <p class="section-subtitle">Understanding our primary user through detailed research and interviews.</p>
+            
+            <div class="personas-grid">
+                <!-- Persona 1: Primary User -->
+                <div class="persona-card fade-in">
+                    <div class="persona-header">
+                        <div class="persona-image">👨‍💼</div>
+                        <div class="persona-info">
+                            <h3>David Okafor</h3>
+                            <div class="persona-role">Ambitious Professional</div>
+                            <div class="persona-meta">28 years old • Software Developer • Lagos</div>
+                        </div>
+                    </div>
+                    
+                    <div class="persona-section">
+                        <h4>Motivations</h4>
+                        <ul>
+                            <li>Wants to save for a house down payment within two years</li>
+                            <li>Desires financial awareness without spending hours on budgeting</li>
+                            <li>Values technology that fits seamlessly into his lifestyle</li>
+                            <li>Motivated by data-driven insights and visual progress</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="persona-section">
+                        <h4>Behaviors</h4>
+                        <ul>
+                            <li>Makes multiple digital transactions daily (food, transport, online shopping)</li>
+                            <li>Tried three expense trackers but abandoned them all within weeks</li>
+                            <li>Checks financial apps on commute and before bed</li>
+                            <li>Prefers voice commands and automation over manual input</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="persona-section">
+                        <h4>Pain Points</h4>
+                        <ul>
+                            <li>Existing expense apps require too much manual typing</li>
+                            <li>Forgets to log transactions and loses track of spending</li>
+                            <li>Frustrated by time spent categorizing every purchase</li>
+                            <li>Finds traditional budgeting spreadsheets overwhelming</li>
+                            <li>Wants insights but doesn't want to work for them</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="persona-quote">
+                        "I've downloaded so many expense trackers, but I always give up after a week. It's just too much work to type everything. I need something that fits into my life, not something that becomes another chore."
+                    </div>
+                </div>
+
+                <!-- Persona 2: Primary User -->
+                <div class="persona-card fade-in">
+    <div class="persona-header">
+        <div class="persona-image">👩‍🎓</div>
+        <div class="persona-info">
+            <h3>Ngozi Okafor</h3>
+            <div class="persona-role">Budget-Conscious Student</div>
+            <div class="persona-meta">22 years old • University Student • Ibadan</div>
+        </div>
+    </div>
+    
+    <div class="persona-section">
+        <h4>Motivations</h4>
+        <ul>
+            <li>Wants to stretch limited monthly allowance to last the whole month</li>
+            <li>Needs to track spending to avoid running out of money mid-month</li>
+            <li>Desires quick, frictionless expense logging between classes</li>
+            <li>Motivated by staying within budget and avoiding asking parents for extra money</li>
+        </ul>
+    </div>
+    
+    <div class="persona-section">
+        <h4>Behaviors</h4>
+        <ul>
+            <li>Makes many small cash and digital transactions throughout the day</li>
+            <li>Often forgets to keep physical receipts from market purchases</li>
+            <li>Uses phone constantly for social media, notes, and mobile banking</li>
+            <li>Prefers simple, fast apps that don't require complicated setup</li>
+        </ul>
+    </div>
+    
+    <div class="persona-section">
+        <h4>Pain Points</h4>
+        <ul>
+            <li>Runs out of money before month-end because tracking is too tedious</li>
+            <li>No time between lectures to manually log every small expense</li>
+            <li>Loses receipts from market sellers who don't provide digital receipts</li>
+            <li>Previous expense apps felt too complicated and time-consuming</li>
+            <li>Struggles to remember cash transactions made hours earlier</li>
+        </ul>
+    </div>
+    
+    <div class="persona-quote">
+        "By the time I get home from campus, I've completely forgotten what I spent money on. I need an app that lets me log expenses in seconds, right when I make them, without stopping what I'm doing."
+    </div>
+</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Empathy Mapping -->
+    <section class="empathy-mapping">
+        <div class="empathy-container">
+            <h2 class="section-title">Empathy Mapping</h2>
+            <p class="section-subtitle">Deep dive into understanding our user's thoughts, feelings, and daily experiences with money.</p>
+            
+            <div class="empathy-map fade-in">
+                <div class="empathy-header">
+                    <h3>David - The Aspiring Saver</h3>
+                    <p>Understanding the financial tracking user's perspective</p>
+                </div>
+                
+                <div class="empathy-grid">
+                    <!-- Center Image - Placeholder for persona photo -->
+                    <div class="empathy-center-image">👨‍💼</div>
+                    
+                    <div class="empathy-quadrant says">
+                        <h4>💬 Says</h4>
+                        <ul>
+                            <li>"I need to save more money"</li>
+                            <li>"Where does my salary go every month?"</li>
+                            <li>"I don't have time to track everything"</li>
+                            <li>"This expense app is too complicated"</li>
+                            <li>"I'll start tracking next month"</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="empathy-quadrant thinks">
+                        <h4>💭 Thinks</h4>
+                        <ul>
+                            <li>I'm probably spending more than I realize</li>
+                            <li>If only there was an easier way to track</li>
+                            <li>Manual entry is killing my motivation</li>
+                            <li>I should have started saving years ago</li>
+                            <li>My friends seem to manage better</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="empathy-quadrant does">
+                        <h4>🏃 Does</h4>
+                        <ul>
+                            <li>Checks bank balance multiple times daily</li>
+                            <li>Downloads expense apps but abandons them quickly</li>
+                            <li>Makes impulse purchases and regrets later</li>
+                            <li>Keeps receipts but never organizes them</li>
+                            <li>Sets monthly budgets but never tracks them</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="empathy-quadrant feels">
+                        <h4>❤️ Feels</h4>
+                        <ul>
+                            <li>Anxious about not hitting savings goals</li>
+                            <li>Overwhelmed by financial management tools</li>
+                            <li>Guilty after unplanned spending</li>
+                            <li>Motivated when seeing financial progress</li>
+                            <li>Frustrated by time-consuming manual tracking</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Flow -->
+    <section class="user-flow">
+        <div class="flow-container">
+            <h2 class="section-title">User Flow</h2>
+            <p class="section-subtitle">Seamless journey from onboarding to daily expense tracking with multiple input methods.</p>
+            
+            <div class="placeholder-flow">User Journey Flow Diagram</div>
+            <div class="flow-description">
+                <h3>User Journey Highlights:</h3>
+                <p>
+                    1. Splash screen → Onboarding (to be added) → Direct to home<br>
+                    2. View financial overview with balance card, budget progress, and recent transactions<br>
+                    3. Filter transactions by categories (Food, Transport, Shopping, etc.)<br>
+                    4. Add transaction via three methods:<br>
+                    &nbsp;&nbsp;&nbsp;• Manual Entry: Select expense/income, amount, category, description, date/time<br>
+                    &nbsp;&nbsp;&nbsp;• Voice Entry: Speak transaction details, AI extracts and populates form<br>
+                    &nbsp;&nbsp;&nbsp;• Receipt Scan: Photo receipt, OCR extracts merchant, amount, date automatically<br>
+                    5. View transactions in detailed list or calendar view with date highlighting<br>
+                    6. Edit transactions by swiping left on any item<br>
+                    7. View statistics with spending breakdown by category<br>
+                    8. Manage settings (budget, currency, dark/light mode, data backup)
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design System -->
+    <section class="design-system">
+        <div class="design-container">
+            <h2 class="section-title">Design System</h2>
+            <p class="section-subtitle">A vibrant, modern visual language that makes finance feel approachable and exciting.</p>
+            
+            <div class="colors-section fade-in">
+                <h3>Colors</h3>
+                <p>Bold gradient-driven color palette with full dark mode support.</p>
+                <div class="colors-grid">
+                    <div class="color-card">
+                        <div class="color-preview" style="background: #FF1097;">#FF1097</div>
+                        <div class="color-info">
+                            <div class="color-name">Primary Pink</div>
+                            <div class="color-usage">Accent, CTAs, Important Elements</div>
+                        </div>
+                    </div>
+                    
+                    <div class="color-card">
+                        <div class="color-preview" style="background: #02C0B0;">#02C0B0</div>
+                        <div class="color-info">
+                            <div class="color-name">Gradient Blue</div>
+                            <div class="color-usage">Gradients</div>
+                        </div>
+                    </div>
+                    
+                    <div class="color-card">
+                        <div class="color-preview" style="background: #0024CA;">#0024CA</div>
+                        <div class="color-info">
+                            <div class="color-name">Secondary Blue</div>
+                            <div class="color-usage">Secondary Actions</div>
+                        </div>
+                    </div>
+                    
+                    <div class="color-card">
+                        <div class="color-preview" style="background: #FF0004;">#FF0004</div>
+                        <div class="color-info">
+                            <div class="color-name">Failed Red</div>
+                            <div class="color-usage">Cancel & Delete Actions, Expense</div>
+                        </div>
+                    </div>
+                    
+                    <div class="color-card">
+                        <div class="color-preview" style="background: #141414;">#141414</div>
+                        <div class="color-info">
+                            <div class="color-name">Dark Background</div>
+                            <div class="color-usage">Dark Mode Background</div>
+                        </div>
+                    </div>
+                    
+                    <div class="color-card">
+                        <div class="color-preview" style="background: #FFFFFF; color: #1a1a1a; border: 1px solid #ddd;">#FFFFFF</div>
+                        <div class="color-info">
+                            <div class="color-name">Light Background</div>
+                            <div class="color-usage">Light Mode Background</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="typography-section fade-in">
+                <h3>Typography</h3>
+                <p>Poppins - A clean, modern sans-serif font family optimized for financial data.</p>
+                <div class="typography-showcase">
+                    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; align-items: center;">
+                        <div>
+                            <div style="font-size: 20px; font-weight: 800; margin-bottom: 1rem; color: #1a1a1a;">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+                            <div style="font-size: 20px; font-weight: 800; margin-bottom: 1rem; color: #1a1a1a;">abcdefghijklmnopqrstuvwxyz</div>
+                            <div style="font-size: 20px; font-weight: 800; color: #1a1a1a;">0123456789</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="margin-bottom: 0.8rem; color: #666; font-size: 16px;">Regular</div>
+                            <div style="margin-bottom: 0.8rem; color: #666; font-size: 16px; font-weight: 600;">Semi-Bold</div>
+                            <div style="color: #666; font-size: 16px; font-weight: 800;">Bold</div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 3rem; padding-top: 3rem; border-top: 2px solid #e9ecef;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <span style="color: #999; font-size: 14px;">Heading Sizes</span>
+                            <span style="color: #999; font-size: 14px;">20px - 10px range</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features -->
+    <section class="key-features">
+        <div class="features-container">
+            <h2 class="section-title">Key Features</h2>
+            <p class="section-subtitle">Innovative features designed to eliminate friction and make expense tracking feel effortless.</p>
+            
+            <div class="feature-item fade-in">
+                <div class="feature-text">
+                    <h3>AI Voice Entry</h3>
+                    <p>The game-changing feature that makes Lumispend different. Simply speak your transaction naturally - "I spent 5000 naira on groceries at Shoprite today" - and AI extracts amount, category, merchant, and date automatically. The system processes your voice, validates the data, then presents a pre-filled form for quick confirmation. No typing required.</p>
+                </div>
+                <div>
+                    <div class="placeholder-feature"><img src="images/voice-entry.png" alt="voice entry" class="placeholder-feature"></div>
+                </div>
+            </div>
+            
+            <div class="feature-item fade-in">
+                <div class="feature-text">
+                    <h3>Smart Receipt Scanning</h3>
+                    <p>Turn paper receipts into digital records instantly. Point your camera at any receipt and OCR technology extracts merchant name, purchase amount, date, and even individual items. Perfect for post-shopping logging without manual typing. The AI automatically categorizes based on merchant recognition.</p>
+                </div>
+                <div>
+                    <div class="placeholder-feature"><img src="images/receipt-scan.png" alt="receipt scan" class="placeholder-feature"></div>
+                </div>
+            </div>
+            
+            <div class="feature-item fade-in">
+                <div class="feature-text">
+                    <h3>Dual Transaction Views</h3>
+                    <p>View your spending history two ways. Detailed List shows every transaction with category icons, amounts (color-coded red for expenses, green for income), and timestamps. Calendar View displays a monthly calendar with date highlighting - pink for expenses, blue for income, yellow for mixed days. Tap any date to see that day's transactions below.</p>
+                </div>
+                <div>
+                    <div class="placeholder-feature"><img src="images/transaction-view.png" alt="transaction view" class="placeholder-feature"></div>
+                </div>
+            </div>
+            
+            <div class="feature-item fade-in">
+                <div class="feature-text">
+                    <h3>Category Filtering & Quick Stats</h3>
+                    <p>Home screen displays category chips (Food, Transport, Shopping, etc.) at the top. Tap any category to instantly filter all transactions showing only that spending type. The balance card shows current balance, total expenses, and income at a glance. Budget progress bars visualize monthly spending limits with percentage indicators.</p>
+                </div>
+                <div>
+                    <div class="placeholder-feature"><img src="images/category-filter.png" alt="category-filter" class="placeholder-feature"></div>
+                </div>
+            </div>
+            
+            <div class="feature-item fade-in">
+                <div class="feature-text">
+                    <h3>Flexible Theme Modes</h3>
+                    <p>Full light and dark mode support with beautiful gradient accents that work in both themes. Dark mode features the signature pink-to-purple gradient against deep backgrounds, perfect for late-night expense logging. Light mode offers a clean, professional look for daytime use. Switch instantly in settings.</p>
+                </div>
+                <div>
+                    <div class="placeholder-feature"><img src="images/theme-mode.png" alt="theme-mode" class="placeholder-feature"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- UI Screens -->
+    <section class="ui-screens">
+        <div class="screens-container">
+            <h2 class="section-title">User Interface Showcase</h2>
+            <p class="section-subtitle">High-fidelity screens in both light and dark modes.</p>
+            
+            <div class="screens-category fade-in">
+                <h3>Home & Transaction Management (Dark Mode)</h3>
+                <div class="screens-grid">
+                    <div class="screen-card">
+                        <div class="placeholder-screen"><img src="images/home-dark.png" alt="home dark" class="placeholder-screen"></div>
+                        <div class="screen-name">Home Dark</div>
+                    </div>
+                    <div class="screen-card">
+                        <div class="placeholder-screen"><img src="images/category-dark.png" alt="category dark" class="placeholder-screen"></div>
+                        <div class="screen-name">Categories Dark</div>
+                    </div>
+                    <div class="screen-card">
+                        <div class="placeholder-screen"><img src="images/transactions-dark.png" alt="transactions dark" class="placeholder-screen"></div>
+                        <div class="screen-name">Transactions Dark</div>
+                    </div>
+                    <div class="screen-card">
+                        <div class="placeholder-screen"><img src="images/calender-dark.png" alt="calender dark" class="placeholder-screen"></div>
+                        <div class="screen-name">Calendar Dark</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="screens-category fade-in">
+                <h3>AI Input Methods (Dark Mode)</h3>
+                <div class="screens-grid">
+                    <div class="screen-card">
+                        <div class="placeholder-screen"><img src="images/add-transaction.png" alt="add transaction" class="placeholder-screen"></div>
+                        <div class="screen-name">Add Transaction</div>
+                    </div>
+                    <div class="screen-card">
+                        <div class="placeholder-screen"><img src="images/voice-input.png" alt="voice input" class="placeholder-screen"></div>
+                        <div class="screen-name">Voice Input</div>
+                    </div>
+                    <div class="screen-card">
+                        <div class="placeholder-screen"><img src="images/scan-receipt.png" alt="scan receipt" class="placeholder-screen"></div>
+                        <div class="screen-name">Receipt Scan</div>
+                    </div>
+                    <div class="screen-card">
+                        <div class="placeholder-screen"><img src="images/manual-form.png" alt="manual form" class="placeholder-screen"></div>
+                        <div class="screen-name">Manual Form</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="screens-category fade-in">
+                <h3>Statistics & Settings (Light Mode)</h3>
+                <div class="screens-grid">
+                    <div class="screen-card">
+                        <div class="placeholder-screen"><img src="images/statistics.png" alt="statistics" class="placeholder-screen"></div>
+                        <div class="screen-name">Statistics</div>
+                    </div>
+                    <div class="screen-card">
+                        <div class="placeholder-screen"><img src="images/settings.png" alt="settings" class="placeholder-screen"></div>
+                        <div class="screen-name">Settings</div>
+                    </div>
+                    <div class="screen-card">
+                        <div class="placeholder-screen"><img src="images/budget.png" alt="budget" class="placeholder-screen"></div>
+                        <div class="screen-name">Budget Setup</div>
+                    </div>
+                    <div class="screen-card">
+                        <div class="placeholder-screen"><img src="images/currency.png" alt="currency" class="placeholder-screen"></div>
+                        <div class="screen-name">Currency</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Outcomes & Reflection -->
+    <section class="outcomes">
+        <div class="outcomes-container">
+            <h2 class="section-title">Project Outcomes</h2>
+            <p class="section-subtitle">Building a product that people actually want to use every day.</p>
+            
+            <div class="outcomes-grid">
+                <div class="outcome-stat fade-in">
+                    <div class="outcome-number">3</div>
+                    <div class="outcome-label">Input Methods</div>
+                </div>
+                <div class="outcome-stat fade-in">
+                    <div class="outcome-number">2</div>
+                    <div class="outcome-label">Theme Modes</div>
+                </div>
+                <div class="outcome-stat fade-in">
+                    <div class="outcome-number">90%</div>
+                    <div class="outcome-label">Less Time to Log</div>
+                </div>
+            </div>
+            
+            <div class="reflection fade-in">
+                <h3>Key Learnings & Reflections</h3>
+                <p>
+                    The biggest insight from designing Lumispend was understanding that people don't hate tracking expenses - they hate the work it requires. Every expense tracker promises to help users save money, but most fail because they create more friction than value. The solution wasn't better charts or fancier analytics - it was making input so fast it feels invisible.
+                    <br><br>
+                    Voice entry and receipt scanning aren't just "nice features" - they're fundamental to solving the abandonment problem. When logging a transaction takes 5 seconds instead of 30, users actually do it. When the app extracts data automatically instead of forcing multiple form fields, it respects people's time. This is what makes Lumispend different from the dozens of abandoned expense trackers on users' phones.
+                    <br><br>
+                    Building the AI integration taught me the importance of graceful error handling. Voice recognition isn't perfect, and receipt photos can be blurry. The key was designing the confirmation step - letting AI do the heavy lifting but always giving users a chance to review and correct before saving. This balance between automation and control is crucial for trust.
+                    <br><br>
+                    Looking forward, I want to explore predictive features - using transaction patterns to automatically suggest budgets, warn about unusual spending, and forecast month-end balances. The calendar view could show future dates with projected expenses based on recurring patterns. The home screen widget could also evolve into an iOS/Android widget for truly instant logging without opening the app.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Interested in This Project?</h2>
+            <p>Let's discuss how I design products that eliminate friction and create delightful user experiences.</p>
+            <div class="cta-buttons">
+                <a href="contact.html" class="btn btn-primary">Get in Touch</a>
+                <a href="work.html" class="btn btn-secondary">View More Projects</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Theresa Onochieumeh</h3>
+                <p>Product Designer & Developer</p>
+            </div>
+            <div class="footer-section">
+                <h3>Links</h3>
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="work.html">Work</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <a href="mailto:theresaonochieumeh@gmail.com">Email</a>
+                <a href="https://www.linkedin.com/in/theresa-onochieumeh-a77094230" target="_blank">LinkedIn</a>
+                <a href="https://www.behance.net/theresaonochieumeh" target="_blank">Behance</a>
+            </div>
+        </div>
+        <p style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); color: #808080;">&copy; 2026 Theresa Onochieumeh</p>
+    </footer>
+
+    <script>
+        // Scroll Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>

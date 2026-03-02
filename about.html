@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me - Theresa Onochieumeh</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 5%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff1493, #1e3a8a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 3rem;
+        }
+        
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover, nav a.active {
+            color: #ff1493;
+        }
+        
+        .page-header {
+            padding: 10rem 5% 4rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .page-header h1 {
+            font-size: 4rem;
+            background: linear-gradient(135deg, #ff1493, #1e3a8a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            color: #808080;
+        }
+        
+        section {
+            padding: 4rem 5%;
+        }
+        
+        .about-intro {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #111111;
+            padding: 4rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 20, 147, 0.2);
+        }
+        
+        .about-intro h2 {
+            color: #ff1493;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .about-intro p {
+            color: #b0b0b0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 4rem auto;
+        }
+        
+        .stat-card {
+            background: rgba(30, 58, 138, 0.1);
+            padding: 2.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 20, 147, 0.3);
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .stat-card:hover {
+            border-color: #ff1493;
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(255, 20, 147, 0.3);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff1493, #1e3a8a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: #b0b0b0;
+            font-size: 1.1rem;
+        }
+        
+        .journey-section {
+            background: #111111;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #ff1493;
+            margin-bottom: 3rem;
+        }
+        
+        .timeline {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, #ff1493, #1e3a8a);
+        }
+        
+        .timeline-item {
+            margin-bottom: 4rem;
+            position: relative;
+        }
+        
+        .timeline-content {
+            background: rgba(30, 58, 138, 0.1);
+            padding: 2.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 20, 147, 0.2);
+            width: 45%;
+            transition: all 0.3s;
+        }
+        
+        .timeline-content:hover {
+            border-color: #ff1493;
+            box-shadow: 0 15px 35px rgba(255, 20, 147, 0.2);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+        }
+        
+        .timeline-content h3 {
+            color: #ff1493;
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .timeline-date {
+            color: #808080;
+            margin-bottom: 1rem;
+        }
+        
+        .timeline-content p {
+            color: #b0b0b0;
+            line-height: 1.8;
+        }
+        
+        .skills-expertise {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+        
+        .expertise-card {
+            background: #111111;
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 20, 147, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .expertise-card:hover {
+            border-color: #ff1493;
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 20, 147, 0.3);
+        }
+        
+        .expertise-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .expertise-card h3 {
+            color: #ff1493;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .expertise-card p {
+            color: #b0b0b0;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        .expertise-list {
+            list-style: none;
+        }
+        
+        .expertise-list li {
+            color: #808080;
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .expertise-list li::before {
+            content: '▸';
+            color: #ff1493;
+            position: absolute;
+            left: 0;
+        }
+        
+        footer {
+            padding: 3rem 5%;
+            background: #111111;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+        
+        .footer-section h3 {
+            color: #ff1493;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-section a {
+            color: #808080;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: #ff1493;
+        }
+        
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            .timeline::before {
+                left: 0;
+            }
+            .timeline-content {
+                width: 100%;
+                margin-left: 2rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">Theresa .O. Onochieumeh</a>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="work.html">Work</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="page-header">
+        <h1>About Me</h1>
+        <p>Designer, Developer, and Problem Solver</p>
+    </div>
+    
+    <section>
+        <div class="about-intro">
+            <h2>Hello, I'm Theresa!</h2>
+            <p>I’m a web developer with a background in product design. My journey into tech did not follow a straight line, and I think that’s one of my strengths. I started building websites with WordPress years ago, working on small projects and learning by doing. Later, I moved into product design professionally, where I learned how to think deeply about usability, structure, and user behavior. Over time, I felt the need to go beyond the surface and understand the logic behind the interface. That curiosity pushed me deeper into development.</p>
+            <p>Today, I focus primarily on web development. I build websites and web applications using WordPress and programming languages, and I am currently expanding into mobile app development. Because of my design background, I do not just think about whether something works. I think about whether it makes sense, whether it feels clear, and whether it truly serves the person using it.</p>
+            <p>I care a lot about structure and clarity. I like knowing how things are put together. I like solving problems that require both logic and empathy. That balance between technical depth and human understanding is what shapes the way I work.</p>
+            <p>Over the years, I have worked with startups, small businesses, and growing teams, helping them strengthen their digital presence through both development and design. Whether I am writing code or refining a layout, I approach each project with intention and a strong sense of ownership.</p>
+            <p>Outside of work, I am constantly learning. I explore new technologies, experiment with automation tools, and study how digital products evolve. I am not just interested in building things. I am interested in building things properly.</p>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Projects Completed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">30+</div>
+                <div class="stat-label">Happy Clients</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">3+</div>
+                <div class="stat-label">Years Experience</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">15+</div>
+                <div class="stat-label">Skills Mastered</div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="journey-section">
+        <h2 class="section-title">My Journey</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Started Web Development Journey</h3>
+                    <p class="timeline-date">2021</p>
+                    <p>I began my journey into web development through WordPress, learning how websites are structured, customized, and deployed. What started as curiosity quickly turned into hands on building. I explored themes, plugins, layout structures, and basic frontend customization, gradually understanding not just how to design a site visually but how to make it functional. This was where I first discovered how much I enjoyed bringing ideas to life on the web.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Freelance Web Developer</h3>
+                    <p class="timeline-date">2022 – 2024</p>
+                    <p>I worked with various clients to build and customize WordPress websites, landing pages, and business platforms. I managed projects from setup to deployment, handling structure, responsiveness, and performance improvements. Collaborated directly with clients to understand their goals and translate them into practical web solutions. During this period, I strengthened my technical foundation while also refining my eye for layout and usability.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Started Design Journey</h3>
+                    <p class="timeline-date">2023</p>
+                    <p>I began my journey into UI/UX design, learning the fundamentals of user centered design, design thinking, and modern design tools. Quickly developed a passion for creating intuitive digital experiences.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>AppsoluteNG</h3>
+                    <p class="timeline-date">June 2024</p>
+                    <p>I contributed as a web developer across multiple digital platforms, building and maintaining web applications while ensuring performance, structure, and scalability. Worked with both WordPress and custom code to develop functional, responsive solutions aligned with business goals.
+
+Alongside development, I handled product design responsibilities including user research, wireframing, and interface design. Collaborated closely with cross functional teams to translate requirements into practical implementations, ensuring that both the technical foundation and the user experience were thoughtfully executed.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Founded Lumi Apps</h3>
+                    <p class="timeline-date">2025</p>
+                    <p>Established Lumi Apps to create utility applications that simplify everyday tasks. Focused on combining elegant design with powerful functionality to deliver products that users love.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="skills-expertise">
+        <h2 class="section-title">Areas of Expertise</h2>
+        <div class="expertise-grid">
+            <div class="expertise-card">
+                <div class="expertise-icon">🎨</div>
+                <h3>UX/UI Design</h3>
+                <p>Creating user-centered designs that are both beautiful and functional</p>
+                <ul class="expertise-list">
+                    <li>User Research & Testing</li>
+                    <li>Wireframing & Prototyping</li>
+                    <li>Design Systems</li>
+                    <li>Accessibility Design</li>
+                </ul>
+            </div>
+            
+            <div class="expertise-card">
+                <div class="expertise-icon">💻</div>
+                <h3>Web Development</h3>
+                <p>Building responsive, performant websites and web applications</p>
+                <ul class="expertise-list">
+                    <li>WordPress Development</li>
+                    <li>HTML/CSS/JavaScript/PHP</li>
+                    <li>Responsive Design</li>
+                    <li>E-commerce Solutions</li>
+                    <li>React</li>
+                </ul>
+            </div>
+            
+            <div class="expertise-card">
+                <div class="expertise-icon">📱</div>
+                <h3>Mobile Apps</h3>
+                <p>Designing and developing native mobile applications</p>
+                <ul class="expertise-list">
+                    <li>iOS & Android Design</li>
+                    <li>Mobile App Development</li>
+                    <li>App Store Optimization</li>
+                    <li>Cross-platform Solutions</li>
+                </ul>
+            </div>
+            
+            <div class="expertise-card">
+                <div class="expertise-icon">🤖</div>
+                <h3>AI & Automation</h3>
+                <p>Streamlining workflows with intelligent automation</p>
+                <ul class="expertise-list">
+                    <li>n8n Workflows</li>
+                    <li>Process Automation</li>
+                    <li>AI Integration</li>
+                    <li>ChatGPT & Prompting</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Theresa Onochieumeh</h3>
+                <p style="color: #808080;">Product Designer & Developer</p>
+            </div>
+            <div class="footer-section">
+                <h3>Links</h3>
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="work.html">Work</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <a href="mailto:theresaonochieumeh@gmail.com">Email</a>
+                <a href="https://www.linkedin.com/in/theresa-onochieumeh-a77094230" target="_blank">LinkedIn</a>
+                <a href="https://www.behance.net/theresaonochieumeh" target="_blank">Behance</a>
+            </div>
+        </div>
+        <p style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); color: #808080;">&copy; 2026 Theresa Onochieumeh</p>
+    </footer>
+</body>
+</html>

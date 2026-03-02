@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theresa Onochieumeh - Product Designer & Developer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 5%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff1493, #1e3a8a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 3rem;
+        }
+        
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover, nav a.active {
+            color: #ff1493;
+        }
+        
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 5%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 900px;
+            text-align: center;
+            animation: fadeInUp 1s ease-out;
+            z-index: 2;
+        }
+        
+        .hero-label {
+            font-size: 1.2rem;
+            color: #ff1493;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ff1493, #1e3a8a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+        
+        .hero .description {
+            font-size: 1.2rem;
+            color: #b0b0b0;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .cta-button {
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #ff1493, #1e3a8a);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 20, 147, 0.5);
+        }
+        
+        .cta-button.secondary {
+            background: transparent;
+            border: 2px solid #ff1493;
+            box-shadow: none;
+        }
+
+        .hero-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-top: 1rem;
+    max-width: 900px;
+}
+
+.hero-image-card {
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 20, 147, 0.3);
+    transition: all 0.3s;
+}
+
+.hero-image-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(255, 20, 147, 0.4);
+    border-color: #ff1493;
+}
+
+.hero-image-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Make images stack on mobile */
+@media (max-width: 768px) {
+    .hero-images {
+        grid-template-columns: 1fr;
+    }
+}
+        
+        section {
+            padding: 6rem 5%;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-label {
+            color: #ff1493;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin: 1rem 0;
+        }
+        
+        .section-subtitle {
+            color: #808080;
+            font-size: 1.1rem;
+        }
+        
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .work-card {
+            background: #111111;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .work-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 20, 147, 0.4);
+            border-color: rgba(255, 20, 147, 0.5);
+        }
+        
+        .work-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, rgba(255, 20, 147, 0.3), rgba(30, 58, 138, 0.3));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+        
+        .work-content {
+            padding: 2rem;
+        }
+        
+        .work-content h3 {
+            color: #ff1493;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .skill-tag {
+            background: rgba(30, 58, 138, 0.3);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 20, 147, 0.3);
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .skill-tag:hover {
+            background: rgba(255, 20, 147, 0.2);
+            border-color: #ff1493;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 20, 147, 0.3);
+        }
+
+        .view-all-btn {
+            padding: 1rem 3rem;
+            background: transparent;
+            border: 2px solid rgba(255, 20, 147, 0.5);
+            color: #ffffff;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .view-all-btn:hover {
+            background: rgba(255, 20, 147, 0.2);
+            border-color: #ff1493;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 20, 147, 0.3);
+        }
+
+        .additional-skill {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+              opacity: 0;
+              transform: translateY(10px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+        }
+        
+        .tools-carousel-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow: hidden;
+            padding: 2rem 0;
+        }
+        
+        .tools-carousel {
+            display: flex;
+            gap: 2rem;
+            animation: scroll 60s linear infinite;
+        }
+        
+        .tools-carousel:hover {
+            animation-play-state: paused;
+        }
+        
+        .tool-card {
+            min-width: 180px;
+            background: rgba(30, 58, 138, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .tool-card:hover .tool-logo {
+            transform: scale(1.1);
+        }
+        
+        .tool-card:hover {
+            border-color: #ff1493;
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(255, 20, 147, 0.3);
+        }
+        
+        .tool-logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 20px;
+            object-fit: contain;
+            margin-bottom: 1rem;
+            transition: transform 0.3s;
+        }
+        
+        @keyframes scroll {
+         0% {
+              transform: translateX(0);
+            }
+       100% {
+              transform: translateX(-4028px);
+        /* Adjust this number based on YOUR total */
+            }
+        }
+
+        .experience-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+}
+        
+        .experience-card {
+            background: rgba(30, 58, 138, 0.1);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 20, 147, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .experience-card:hover {
+            border-color: #ff1493;
+            box-shadow: 0 15px 35px rgba(255, 20, 147, 0.2);
+        }
+        
+        .experience-card h3 {
+            color: #ff1493;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 1024px) {
+         .testimonials-grid {
+            grid-template-columns: repeat(2, 1fr);
+         }
+        }
+
+        @media (max-width: 768px) {
+         .testimonials-grid {
+            grid-template-columns: 1fr;
+         }
+        }
+        
+        .testimonial-card {
+            background: #111111;
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 20, 147, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .testimonial-card:hover {
+            border-color: #ff1493;
+            box-shadow: 0 20px 40px rgba(255, 20, 147, 0.3);
+            transform: translateY(-5px);
+        }
+        
+        .testimonial-text {
+            color: #b0b0b0;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff1493, #1e3a8a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        footer {
+            padding: 3rem 5%;
+            background: #0a0a0a;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+        
+        .footer-section a {
+            color: #808080;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: #ff1493;
+        }
+        
+        .bg-element {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.12;
+            animation: float 25s infinite ease-in-out;
+        }
+        
+        .bg-element:nth-child(1) {
+            width: 500px;
+            height: 500px;
+            background: #ff1493;
+            top: 10%;
+            left: 5%;
+        }
+        
+        .bg-element:nth-child(2) {
+            width: 400px;
+            height: 400px;
+            background: #1e3a8a;
+            bottom: 10%;
+            right: 10%;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(60px, 60px);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">Theresa .O. Onochieumeh</a>
+            <ul>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="work.html">Work</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <section class="hero">
+        <div class="bg-element"></div>
+        <div class="bg-element"></div>
+        <div class="hero-content">
+            <p class="hero-label">Web Developer with experience in WordPress and Product Design</p>
+            <h1>Theresa Onochieumeh</h1>
+            <p class="description">Hi, I'm a passionate Web developer with a flair for creating stunning and user centric digital experiences.  I started building websites with WordPress before I formally moved into product design. While working as a product designer, I gained a deeper understanding of usability and structure. Over time, I began expanding my development skills beyond WordPress into more programming focused web development and mobile applications.
+
+Now I combine design thinking with development to build digital products that are practical, structured, and easy to use.</p>
+            <div class="cta-buttons">
+                <a href="contact.html" class="cta-button">Book A Call</a>
+                <a href="work.html" class="cta-button secondary">My Work</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="hero">
+    <!-- ADD THIS NEW IMAGE SECTION -->
+        <div class="hero-images">
+            <div class="hero-image-card">
+                <img src="images/hero-image1.jpeg" alt="Theresa Portfolio Image 1">
+            </div>
+            <div class="hero-image-card">
+                <img src="images/hero-image2.jpeg" alt="Theresa Portfolio Image 2">
+            </div>
+        </div>
+    </div>
+    </section>
+    
+    <section>
+        <div class="section-header">
+            <p class="section-label">My Work</p>
+            <h2 class="section-title">Personal Projects</h2>
+            <p class="section-subtitle">Explore my Personal Design And Case Study</p>
+        </div>
+        <div class="work-grid">
+            <div class="work-card">
+                <div class="work-image"><img src="images/ecommerce.png" alt="ecommerce" class="work-image"></div>
+                <div class="work-content">
+                    <h3>Bare Essence Ecommerce Website</h3>
+                    <a href="#" style="color: #ffffff; text-decoration: none;">See Full Case Study →</a>
+                </div>
+            </div>
+            <div class="work-card">
+                <div class="work-image"><img src="images/nexarq.png" alt="Nexarq" class="work-image"></div>
+                <div class="work-content">
+                    <h3>Nexarq Ecommerce Website</h3>
+                    <a href="#" style="color: #ffffff; text-decoration: none;">See Full Case Study →</a>
+                </div>
+            </div>
+            <div class="work-card">
+                <div class="work-image"><img src="images/lumispend.png" alt="LumiSpend" class="work-image"></div>
+                <div class="work-content">
+                    <h3>LumiSpend Expense Tracker Mobile App </h3>
+                    <a href="#" style="color: #ffffff; text-decoration: none;">See Full Case Study →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section style="background: #111111;">
+        <div class="section-header">
+            <p class="section-label">Clients Work</p>
+            <h2 class="section-title">Client Projects</h2>
+        </div>
+        <div class="work-grid">
+            <div class="work-card">
+                <div class="work-image"><img src="images/appfocus.png" alt="appfocus" class="work-image"></div>
+                <div class="work-content">
+                    <h3>Appfocus Banking Website</h3>
+                    <a href="https://www.behance.net/gallery/224400579" target="_blank" style="color: #ffffff; text-decoration: none;">See Case Study →</a>
+                </div>
+            </div>
+            <div class="work-card">
+                <div class="work-image"><img src="images/panicalert.png" alt="panicalert" class="work-image"></div>
+                <div class="work-content">
+                    <h3>Panic Alert Security Website</h3>
+                    <a href="https://www.behance.net/gallery/230555754" target="_blank" style="color: #ffffff; text-decoration: none;">See Case Study →</a>
+                </div>
+            </div>
+            <div class="work-card">
+                <div class="work-image"><img src="images/palgo.png" alt="PalGo" class="work-image"></div>
+                <div class="work-content">
+                    <h3>PalGo Errand Service Mobile App</h3>
+                    <a href="https://www.behance.net/gallery/224400579" target="_blank" style="color: #ffffff; text-decoration: none;">See Case Study →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="skills-section">
+    <div class="section-header">
+        <h2 class="section-title">Skills</h2>
+    </div>
+    <div class="skills-grid" id="skillsGrid">
+        <!-- Primary 10 skills - always visible -->
+        <div class="skill-tag primary-skill">JavaScript</div>
+        <div class="skill-tag primary-skill">React Native</div>
+        <div class="skill-tag primary-skill">API Integration</div>
+        <div class="skill-tag primary-skill">UX Research</div>
+        <div class="skill-tag primary-skill">Wireframing</div>
+        <div class="skill-tag primary-skill">User Flows</div>
+        <div class="skill-tag primary-skill">UI Design</div>
+        <div class="skill-tag primary-skill">WordPress Development</div>
+        <div class="skill-tag primary-skill">HTML/CSS</div>
+        <div class="skill-tag primary-skill">PHP</div>
+        
+        <!-- Additional 15 skills - hidden initially -->
+        <div class="skill-tag additional-skill" style="display: none;">User Persona</div>
+        <div class="skill-tag additional-skill" style="display: none;">Accessibility</div>
+        <div class="skill-tag additional-skill" style="display: none;">Collaboration</div>
+        <div class="skill-tag additional-skill" style="display: none;">Brand Identity</div>
+        <div class="skill-tag additional-skill" style="display: none;">Graphic Design</div>
+        <div class="skill-tag additional-skill" style="display: none;">Prototyping</div>
+        <div class="skill-tag additional-skill" style="display: none;">Automation</div>
+        <div class="skill-tag additional-skill" style="display: none;">Prompting</div>
+        <div class="skill-tag additional-skill" style="display: none;">User Testing</div>
+        <div class="skill-tag additional-skill" style="display: none;">Oracle Cloud Server</div>
+        <div class="skill-tag additional-skill" style="display: none;">AI Automation</div>
+        <div class="skill-tag additional-skill" style="display: none;">Animation</div>
+        <div class="skill-tag additional-skill" style="display: none;">Iconography</div>
+        <div class="skill-tag additional-skill" style="display: none;">Information Architecture</div>
+        <div class="skill-tag additional-skill" style="display: none;">Database Management</div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 3rem;">
+        <button id="viewAllBtn" class="view-all-btn">View All Skills</button>
+    </div>
+</section>
+    
+    <section style="background: #111111;">
+        <div class="section-header">
+            <h2 class="section-title">Tools</h2>
+        </div>
+        <div class="tools-carousel-container">
+    <div class="tools-carousel">
+        <!-- First set -->
+        <div class="tool-card"><img src="images/figma.png" alt="Figma" class="tool-logo"><h3>Figma</h3></div>
+        <div class="tool-card"><img src="images/figjam.png" alt="FigJam" class="tool-logo"><h3>FigJam</h3></div>
+        <div class="tool-card"><img src="images/framer.png" alt="Framer" class="tool-logo"><h3>Framer</h3></div>
+        <div class="tool-card"><img src="images/illustrator.png" alt="Illustrator" class="tool-logo"><h3>Illustrator</h3></div>
+        <div class="tool-card"><img src="images/photoshop.png" alt="Photoshop" class="tool-logo"><h3>Photoshop</h3></div>
+        <div class="tool-card"><img src="images/canva.png" alt="Canva" class="tool-logo"><h3>Canva</h3></div>
+        <div class="tool-card"><img src="images/vscode.png" alt="VS Code" class="tool-logo"><h3>VS Code</h3></div>
+        <div class="tool-card"><img src="images/vs.png" alt="Visual Studio" class="tool-logo"><h3>Visual Studio</h3></div>
+        <div class="tool-card"><img src="images/github.png" alt="GitHub" class="tool-logo"><h3>GitHub</h3></div>
+        <div class="tool-card"><img src="images/expo.png" alt="Expo" class="tool-logo"><h3>Expo</h3></div>
+        <div class="tool-card"><img src="images/docker.png" alt="Docker" class="tool-logo"><h3>Docker</h3></div>
+        <div class="tool-card"><img src="images/wordpress.png" alt="WordPress" class="tool-logo"><h3>WordPress</h3></div>
+        <div class="tool-card"><img src="images/chatgpt.png" alt="ChatGPT" class="tool-logo"><h3>ChatGPT</h3></div>
+        <div class="tool-card"><img src="images/claude.png" alt="Claude" class="tool-logo"><h3>Claude</h3></div>
+        <div class="tool-card"><img src="images/cursor.png" alt="Cursor" class="tool-logo"><h3>Cursor</h3></div>
+        <div class="tool-card"><img src="images/n8n.png" alt="n8n" class="tool-logo"><h3>n8n</h3></div>
+        <div class="tool-card"><img src="images/slack.png" alt="Slack" class="tool-logo"><h3>Slack</h3></div>
+        <div class="tool-card"><img src="images/notion.png" alt="Notion" class="tool-logo"><h3>Notion</h3></div>
+        <div class="tool-card"><img src="images/googleform.png" alt="Google Forms" class="tool-logo"><h3>Google Forms</h3></div>
+        <div class="tool-card"><img src="images/miro.png" alt="Miro" class="tool-logo"><h3>Miro</h3></div>
+        <div class="tool-card"><img src="images/oracle.png" alt="Oracle Cloud Infrastructure" class="tool-logo"><h3>Oracle Cloud Infrastructure</h3></div>
+        
+        <!-- EXACT DUPLICATE for seamless loop -->
+        <div class="tool-card"><img src="images/figma.png" alt="Figma" class="tool-logo"><h3>Figma</h3></div>
+        <div class="tool-card"><img src="images/figjam.png" alt="FigJam" class="tool-logo"><h3>FigJam</h3></div>
+        <div class="tool-card"><img src="images/framer.png" alt="Framer" class="tool-logo"><h3>Framer</h3></div>
+        <div class="tool-card"><img src="images/illustrator.png" alt="Illustrator" class="tool-logo"><h3>Illustrator</h3></div>
+        <div class="tool-card"><img src="images/photoshop.png" alt="Photoshop" class="tool-logo"><h3>Photoshop</h3></div>
+        <div class="tool-card"><img src="images/canva.png" alt="Canva" class="tool-logo"><h3>Canva</h3></div>
+        <div class="tool-card"><img src="images/vscode.png" alt="VS Code" class="tool-logo"><h3>VS Code</h3></div>
+        <div class="tool-card"><img src="images/vs.png" alt="Visual Studio" class="tool-logo"><h3>Visual Studio</h3></div>
+        <div class="tool-card"><img src="images/github.png" alt="GitHub" class="tool-logo"><h3>GitHub</h3></div>
+        <div class="tool-card"><img src="images/expo.png" alt="Expo" class="tool-logo"><h3>Expo</h3></div>
+        <div class="tool-card"><img src="images/docker.png" alt="Docker" class="tool-logo"><h3>Docker</h3></div>
+        <div class="tool-card"><img src="images/wordpress.png" alt="WordPress" class="tool-logo"><h3>WordPress</h3></div>
+        <div class="tool-card"><img src="images/chatgpt.png" alt="ChatGPT" class="tool-logo"><h3>ChatGPT</h3></div>
+        <div class="tool-card"><img src="images/claude.png" alt="Claude" class="tool-logo"><h3>Claude</h3></div>
+        <div class="tool-card"><img src="images/cursor.png" alt="Cursor" class="tool-logo"><h3>Cursor</h3></div>
+        <div class="tool-card"><img src="images/n8n.png" alt="n8n" class="tool-logo"><h3>n8n</h3></div>
+        <div class="tool-card"><img src="images/slack.png" alt="Slack" class="tool-logo"><h3>Slack</h3></div>
+        <div class="tool-card"><img src="images/notion.png" alt="Notion" class="tool-logo"><h3>Notion</h3></div>
+        <div class="tool-card"><img src="images/googleform.png" alt="Google Forms" class="tool-logo"><h3>Google Forms</h3></div>
+    </div>
+</div>
+        </div>
+    </section>
+    
+    <section>
+        <div class="section-header">
+            <p class="section-label">My Work Experience</p>
+            <h2 class="section-title">Companies I Have Worked With</h2>
+        </div>
+    <div class="experience-container">
+        <div class="experience-card">
+            <h3>AppsoluteNG</h3>
+            <p style="color: #fff; font-size: 1.2rem; margin: 0.5rem 0;">Web Developer and Lead Product Designer</p>
+            <p style="color: #808080; margin-bottom: 1.5rem;">June 2023 – Feb 2026</p>
+            <p style="color: #b0b0b0; line-height: 1.8;">I developed and maintained WordPress websites and web applications, handling both frontend structure and backend customizations. Built responsive interfaces, implemented features, and optimized performance across multiple projects.
+
+Alongside development, i led product design efforts for mobile apps, web platforms, and enterprise software. Conducted user research, created wireframes, and translated complex requirements into clear and functional interfaces while collaborating with cross functional teams.</p>
+        </div>
+        <div class="experience-card">
+            <h3>Freelancing</h3>
+            <p style="color: #fff; font-size: 1.2rem; margin: 0.5rem 0;">Freelance Web Developer and Product Designer</p>
+            <p style="color: #808080; margin-bottom: 1.5rem;">2022 – 2024</p>
+            <p style="color: #b0b0b0; line-height: 1.8;">I designed and developed WordPress websites for various clients, handling layout structure, customization, and deployment. I worked directly with clients to understand business needs and translate them into functional websites.
+
+I also designed mobile applications and digital interfaces, focusing on usability, clarity, and brand consistency.</p>
+        </div>
+    </div>
+    </section>
+    
+    <section style="background: #111111;">
+        <div class="section-header">
+            <h2 class="section-title">Client Testimonials</h2>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <p class="testimonial-text">"Working with Theresa has had a real impact on our team at AppsoluteNG. She has a strong ability to break down complex ideas and turn them into clear, practical solutions. Whether she is designing or developing, she approaches every project thoughtfully and takes ownership of her work. She has been a valuable part of our growth."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">M</div>
+                    <div>
+                        <h4 style="color: #fff;">Mr Micheal David</h4>
+                        <p style="color: #808080; font-size: 0.9rem;">CEO AppsoluteNG</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">"Theresa built my landing page on WordPress and made the whole process smooth from start to finish. She took time to understand my brand and translated it into a clean and professional website. Communication was clear, deadlines were met, and I was genuinely satisfied with the final result."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">D</div>
+                    <div>
+                        <h4 style="color: #fff;">Daniel Okeke</h4>
+                        <p style="color: #808080; font-size: 0.9rem;">Founder of Nova and Co.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">"Theresa helped me redesign my website and improve its overall structure. She was reliable, easy to communicate with, and delivered exactly what we discussed. The final website feels more aligned with my brand and easier for customers to navigate."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">D</div>
+                    <div>
+                        <h4 style="color: #fff;">Lucy Eliot</h4>
+                        <p style="color: #808080; font-size: 0.9rem;">Founder of Gadget Retail Company</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section style="text-align: center;">
+        <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">Open to opportunities and Collaboration</h2>
+        <p style="color: #b0b0b0; max-width: 700px; margin: 0 auto 1.5rem; line-height: 1.8;">I am currently open to roles where I can contribute as a web developer while continuing to grow my technical depth. I enjoy working on products that require thoughtful structure, clean implementation, and attention to usability. If you are building something meaningful and need someone who understands both design and development, I would be glad to connect.</p>
+        <a href="contact.html" class="cta-button" style="margin-top: 1rem;">Work With Me</a>
+    </section>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3 style="color: #ff1493; margin-bottom: 1rem;">Theresa Onochieumeh</h3>
+                <p style="color: #808080;">Web Developer & Product Designer</p>
+            </div>
+            <div class="footer-section">
+                <h3 style="color: #ff1493; margin-bottom: 1rem;">Links</h3>
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="work.html">Work</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h3 style="color: #ff1493; margin-bottom: 1rem;">Connect</h3>
+                <a href="mailto:theresaonochieumeh@gmail.com">Email</a>
+                <a href="https://www.linkedin.com/in/theresa-onochieumeh-a77094230" target="_blank">LinkedIn</a>
+                <a href="https://www.behance.net/theresaonochieumeh" target="_blank">Behance</a>
+            </div>
+        </div>
+        <p style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); color: #808080;">&copy; 2026 Theresa Onochieumeh</p>
+    </footer>
+
+    <script>
+    const viewAllBtn = document.getElementById('viewAllBtn');
+    const additionalSkills = document.querySelectorAll('.additional-skill');
+    let isExpanded = false;
+    
+    viewAllBtn.addEventListener('click', function() {
+        isExpanded = !isExpanded;
+        
+        additionalSkills.forEach(skill => {
+            if (isExpanded) {
+                skill.style.display = 'block';
+            } else {
+                skill.style.display = 'none';
+            }
+        });
+        
+        // Change button text
+        viewAllBtn.textContent = isExpanded ? 'Show Less' : 'View All Skills';
+    });
+</script>
+</body>
+</html>

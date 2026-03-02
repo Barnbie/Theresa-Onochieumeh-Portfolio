@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LumiMemo - Smart Notepad App Case Study | Theresa Onochieumeh</title>
+    <link href="https://fonts.googleapis.com/css2?family=Martel+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Martel Sans', 'Segoe UI', sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation - Dark theme matching work.html */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 5%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff1493, #1e3a8a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 3rem;
+        }
+        
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        nav a:hover, nav a.active {
+            color: #ff1493;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 120px 5% 80px;
+            background: linear-gradient(135deg, #0024CA 0%, #02C0B0 50%, #C61260 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.08) 0%, transparent 50%);
+            opacity: 0.5;
+        }
+        
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+        }
+        
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .project-meta {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .meta-item {
+            text-align: center;
+        }
+        
+        .meta-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .meta-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        /* Hero Image */
+        .hero-image {
+            margin-top: 4rem;
+            padding: 0 5%;
+        }
+        
+        .placeholder-hero {
+            width: 100%;
+            max-width: 1200px;
+            height: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Content Sections */
+        .content-section {
+            padding: 100px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #0024CA;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 3rem;
+            max-width: 800px;
+            line-height: 1.8;
+        }
+        
+        /* Overview Section */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        
+        .overview-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border-left: 4px solid #0024CA;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+        
+        .overview-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 36, 202, 0.1);
+        }
+        
+        .overview-card h3 {
+            color: #0024CA;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .overview-card p {
+            color: #555;
+            line-height: 1.8;
+        }
+        
+        /* Design Goals */
+        .design-goals {
+            padding: 100px 5%;
+            background: #f8f9fa;
+        }
+        
+        .goals-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .goals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+        
+        .goal-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .goal-card:hover {
+            border-color: #0024CA;
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 36, 202, 0.15);
+        }
+        
+        .goal-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #0024CA, #02C0B0, #C61260);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2.5rem;
+        }
+        
+        .goal-card h3 {
+            color: #0024CA;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        
+        .goal-card p {
+            color: #555;
+            line-height: 1.8;
+        }
+        
+        /* Design Process */
+        .design-process {
+            padding: 100px 5%;
+            background: white;
+        }
+        
+        .process-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .process-placeholder {
+            width: 100%;
+            max-width: 1200px;
+            height: 400px;
+            margin: 3rem auto;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #999;
+            border: 3px dashed #ddd;
+            gap: 1rem;
+        }
+        
+        .process-placeholder span {
+            font-size: 1rem;
+            color: #bbb;
+        }
+        
+        /* Challenge & Solution */
+        .challenge-solution {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 100px 5%;
+        }
+        
+        .challenge-solution-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 4rem;
+        }
+        
+        .challenge-box, .solution-box {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .challenge-box h2, .solution-box h2 {
+            color: #0024CA;
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+        }
+        
+        .challenge-box p, .solution-box p {
+            color: #555;
+            line-height: 1.9;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .challenge-box ul, .solution-box ul {
+            margin-top: 1.5rem;
+            list-style: none;
+        }
+        
+        .challenge-box li, .solution-box li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            color: #555;
+            line-height: 1.7;
+        }
+        
+        .challenge-box li::before {
+            content: '✗';
+            position: absolute;
+            left: 0;
+            color: #ff4757;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .solution-box li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #02C0B0;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        /* User Personas */
+        .user-personas {
+            padding: 100px 5%;
+            background: white;
+        }
+        
+        .personas-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .personas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        
+        .persona-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e9ecef;
+        }
+        
+        .persona-header {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            align-items: center;
+        }
+        
+        .persona-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0024CA, #02C0B0, #C61260);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            flex-shrink: 0;
+        }
+        
+        .persona-info h3 {
+            color: #0024CA;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        .persona-info .persona-role {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .persona-info .persona-meta {
+            color: #999;
+            font-size: 0.95rem;
+        }
+        
+        .persona-section {
+            margin-top: 2rem;
+        }
+        
+        .persona-section h4 {
+            color: #02C0B0;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .persona-section h4::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: #02C0B0;
+            border-radius: 2px;
+        }
+        
+        .persona-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .persona-section li {
+            padding: 0.6rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: #555;
+            line-height: 1.7;
+        }
+        
+        .persona-section li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #0024CA;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .persona-quote {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1.5rem;
+            border-left: 4px solid #0024CA;
+            font-style: italic;
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        /* Empathy Mapping */
+        .empathy-mapping {
+            padding: 100px 5%;
+            background: #f8f9fa;
+        }
+        
+        .empathy-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .empathy-map {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        }
+        
+        .empathy-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .empathy-header h3 {
+            color: #0024CA;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        .empathy-header p {
+            color: #666;
+        }
+        
+        .empathy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 2rem;
+            position: relative;
+            min-height: 600px;
+        }
+        
+        .empathy-center-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0024CA, #02C0B0, #C61260);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            box-shadow: 0 10px 40px rgba(0, 36, 202, 0.3);
+            border: 8px solid white;
+            z-index: 10;
+        }
+        
+        .empathy-quadrant {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid #e9ecef;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .empathy-quadrant.says {
+            grid-column: 1;
+            grid-row: 1;
+        }
+        
+        .empathy-quadrant.thinks {
+            grid-column: 2;
+            grid-row: 1;
+        }
+        
+        .empathy-quadrant.does {
+            grid-column: 1;
+            grid-row: 2;
+        }
+        
+        .empathy-quadrant.feels {
+            grid-column: 2;
+            grid-row: 2;
+        }
+        
+        .empathy-quadrant h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .empathy-quadrant.says h4 { color: #0024CA; }
+        .empathy-quadrant.thinks h4 { color: #02C0B0; }
+        .empathy-quadrant.does h4 { color: #C61260; }
+        .empathy-quadrant.feels h4 { color: #ffa502; }
+        
+        .empathy-quadrant ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .empathy-quadrant li {
+            padding: 0.6rem 0;
+            color: #555;
+            line-height: 1.6;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.95rem;
+        }
+        
+        .empathy-quadrant li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #999;
+        }
+        
+        /* User Flow Section */
+        .user-flow {
+            padding: 100px 5%;
+            background: white;
+        }
+        
+        .flow-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .placeholder-flow {
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #999;
+            border: 2px dashed #ddd;
+            margin-bottom: 2rem;
+        }
+        
+        .flow-description {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .flow-description h3 {
+            color: #0024CA;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .flow-description p {
+            color: #555;
+            line-height: 1.8;
+        }
+        
+        /* Design System */
+        .design-system {
+            padding: 100px 5%;
+            background: #f8f9fa;
+        }
+        
+        .design-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .colors-section, .typography-section {
+            margin: 4rem 0;
+        }
+        
+        .colors-section h3, .typography-section h3 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+            position: relative;
+            padding-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .colors-section h3::after, .typography-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #0024CA, #02C0B0, #C61260);
+            border-radius: 2px;
+        }
+        
+        .colors-section > p, .typography-section > p {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        
+        .colors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .color-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .color-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .color-preview {
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .color-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .color-name {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #1a1a1a;
+            font-size: 1.1rem;
+        }
+        
+        .color-usage {
+            color: #666;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+        
+        .typography-showcase {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Key Features */
+        .key-features {
+            padding: 100px 5%;
+            background: white;
+        }
+        
+        .features-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .feature-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            margin-bottom: 6rem;
+            align-items: center;
+        }
+        
+        .feature-item:nth-child(even) {
+            direction: rtl;
+        }
+        
+        .feature-item:nth-child(even) > * {
+            direction: ltr;
+        }
+        
+        .feature-text h3 {
+            font-size: 2rem;
+            color: #0024CA;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .feature-text p {
+            color: #555;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        .placeholder-feature {
+            width: 100%;
+            height: 550px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+        
+        /* UI Screens */
+        .ui-screens {
+            padding: 100px 5%;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        
+        .screens-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .screens-category {
+            margin-bottom: 5rem;
+        }
+        
+        .screens-category h3 {
+            font-size: 2rem;
+            color: #0024CA;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 700;
+        }
+        
+        .screens-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .screen-card {
+            background: rgb(222, 232, 250);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .screen-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .placeholder-screen {
+            width: 100%;
+            height: 550px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .screen-name {
+            text-align: center;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+        
+        /* Outcomes */
+        .outcomes {
+            padding: 100px 5%;
+            background: white;
+        }
+        
+        .outcomes-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .outcomes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin: 4rem 0;
+        }
+        
+        .outcome-stat {
+            padding: 2rem;
+        }
+        
+        .outcome-number {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0024CA, #02C0B0, #C61260);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        
+        .outcome-label {
+            color: #555;
+            font-size: 1.1rem;
+        }
+        
+        .reflection {
+            background: #f8f9fa;
+            padding: 3rem;
+            border-radius: 20px;
+            margin-top: 4rem;
+            border-left: 4px solid #0024CA;
+            text-align: left;
+        }
+        
+        .reflection h3 {
+            color: #0024CA;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .reflection p {
+            color: #555;
+            line-height: 1.9;
+            font-size: 1.1rem;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 5%;
+            background: linear-gradient(135deg, #0024CA 0%, #02C0B0 50%, #C61260 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cta-section h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: #0024CA;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: #0024CA;
+        }
+        
+        /* Footer - Matching work.html */
+        footer {
+            padding: 3rem 5%;
+            background: #111111;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+        
+        .footer-section h3 {
+            color: #ff1493;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-section p {
+            color: #808080;
+        }
+        
+        .footer-section a {
+            color: #808080;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: #ff1493;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .challenge-solution-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .personas-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .feature-item {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .feature-item:nth-child(even) {
+                direction: ltr;
+            }
+            
+            nav ul {
+                gap: 1.5rem;
+            }
+            
+            .empathy-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+                min-height: auto;
+            }
+            
+            .empathy-center-image {
+                position: relative;
+                top: auto;
+                left: auto;
+                transform: none;
+                margin: 2rem auto;
+            }
+            
+            .empathy-quadrant.says,
+            .empathy-quadrant.thinks,
+            .empathy-quadrant.does,
+            .empathy-quadrant.feels {
+                grid-column: 1;
+                grid-row: auto;
+            }
+        }
+        
+        /* Fade in animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="work.html" class="logo">Theresa .O. Onochieumeh</a>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="work.html">Work</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>LumiMemo</h1>
+            <p>A Vibrant, Feature-Rich Notepad That Makes Note-Taking Colorful and Effortless</p>
+            
+            <div class="project-meta">
+                <div class="meta-item">
+                    <div class="meta-label">Role</div>
+                    <div class="meta-value">Product Designer & Developer</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Duration</div>
+                    <div class="meta-value">1 Month</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Platform</div>
+                    <div class="meta-value">iOS & Android</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Tools</div>
+                    <div class="meta-value">Figma, React Native, Expo</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="hero-image">
+            <div class="placeholder-hero"><img src="images/lumimemo-hero.png" alt="lumimemo hero" class="placeholder-hero"></div>
+        </div>
+    </section>
+
+    <!-- Project Overview -->
+    <section class="content-section">
+        <h2 class="section-title">Project Overview</h2>
+        <p class="section-subtitle">LumiMemo is a beautifully designed notepad application that transforms simple note-taking into a colorful, organized experience with rich text editing, flexible viewing options, and seamless voice-to-text capabilities.</p>
+        
+        <div class="overview-grid">
+            <div class="overview-card fade-in">
+                <h3>What is LumiMemo?</h3>
+                <p>LumiMemo is a modern notepad app that combines simplicity with powerful features. Users can create vibrant, color-coded notes with rich formatting options, organize them in list or grid layouts, and switch between light and dark modes for comfortable viewing in any environment.</p>
+            </div>
+            
+            <div class="overview-card fade-in">
+                <h3>The Opportunity</h3>
+                <p>Most notepad apps are either too basic (plain text only) or overwhelming (complex word processors). Users need a middle ground - something simple enough for quick notes but powerful enough for serious content creation, with visual organization that makes finding notes effortless.</p>
+            </div>
+            
+            <div class="overview-card fade-in">
+                <h3>My Role</h3>
+                <p>As both Product Designer and Developer, I handled the complete project lifecycle from user research and visual design to building the React Native application with Expo, implementing the rich text editor, and integrating voice-to-text functionality.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design Goals -->
+    <section class="design-goals">
+        <div class="goals-container">
+            <h2 class="section-title">Design Goals</h2>
+            <p class="section-subtitle">Creating a notepad that's both beautiful and functional, making organization visual and editing powerful.</p>
+            
+            <div class="goals-grid">
+                <div class="goal-card fade-in">
+                    <div class="goal-icon">🎨</div>
+                    <h3>Visual Organization</h3>
+                    <p>Make note discovery effortless through vibrant color-coding and flexible grid/list layouts that let users see their content at a glance.</p>
+                </div>
+                
+                <div class="goal-card fade-in">
+                    <div class="goal-icon">✏️</div>
+                    <h3>Powerful Yet Simple</h3>
+                    <p>Provide rich text formatting, lists, links, and media embedding without overwhelming users with complexity.</p>
+                </div>
+                
+                <div class="goal-card fade-in">
+                    <div class="goal-icon">🎤</div>
+                    <h3>Speed Through Voice</h3>
+                    <p>Enable hands-free note creation with voice-to-text that captures thoughts as fast as users can speak them.</p>
+                </div>
+                
+                <div class="goal-card fade-in">
+                    <div class="goal-icon">🌓</div>
+                    <h3>Adaptive Comfort</h3>
+                    <p>Offer both light and dark modes so users can work comfortably whether it's bright daylight or late at night.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design Process -->
+    <section class="design-process">
+        <div class="process-container">
+            <h2 class="section-title">Design Process</h2>
+            <p class="section-subtitle">A methodical approach balancing visual appeal with functional efficiency.</p>
+            
+            <div class="process-placeholder">
+                Your Custom Design Process Diagram
+                <span>(Research → Define → Ideate → Prototype → Test)</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Challenge & Solution -->
+    <section class="challenge-solution">
+        <div class="challenge-solution-content">
+            <div class="challenge-box fade-in">
+                <h2>The Challenge</h2>
+                <p>Why do people abandon or never organize their notes?</p>
+                <ul>
+                    <li>Plain text notes all look the same - impossible to find what you need quickly</li>
+                    <li>Most apps are either too simple (no formatting) or too complex (word processor bloat)</li>
+                    <li>Typing on mobile is slow - thoughts are lost before they're captured</li>
+                    <li>No visual hierarchy - every note has equal visual weight regardless of importance</li>
+                    <li>Dark mode as afterthought - harsh white backgrounds strain eyes at night</li>
+                </ul>
+            </div>
+            
+            <div class="solution-box fade-in">
+                <h2>The Solution</h2>
+                <p>A notepad that's as beautiful as it is functional:</p>
+                <ul>
+                    <li>Color-coded notes (blue, purple, orange, yellow, green, red, pink) for instant visual organization</li>
+                    <li>Grid and list views - choose how you want to see your content</li>
+                    <li>Rich text editor with formatting, lists, links, images, and files - but keep it simple</li>
+                    <li>Voice-to-text for rapid capture without typing</li>
+                    <li>Long-press preview - see note content without opening it</li>
+                    <li>Pin important notes to keep them at the top</li>
+                    <li>Full dark mode design - not just inverted colors</li>
+                    <li>Bulk selection for quick organization and cleanup</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Personas -->
+    <section class="user-personas">
+        <div class="personas-container">
+            <h2 class="section-title">User Personas</h2>
+            <p class="section-subtitle">Understanding the diverse needs of note-takers from students to professionals.</p>
+            
+            <div class="personas-grid">
+                <!-- Persona 1: Student User -->
+                <div class="persona-card fade-in">
+                    <div class="persona-header">
+                        <div class="persona-image">👩‍🎓</div>
+                        <div class="persona-info">
+                            <h3>Adaobi Nkem</h3>
+                            <div class="persona-role">Organized Student</div>
+                            <div class="persona-meta">20 years old • Medical Student • Port Harcourt</div>
+                        </div>
+                    </div>
+                    
+                    <div class="persona-section">
+                        <h4>Motivations</h4>
+                        <ul>
+                            <li>Needs to organize massive amounts of study notes across different subjects</li>
+                            <li>Wants visual organization to quickly find specific topics during exam prep</li>
+                            <li>Values speed - must capture lecture notes without slowing down</li>
+                            <li>Prefers digital over paper for searchability and backup</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="persona-section">
+                        <h4>Behaviors</h4>
+                        <ul>
+                            <li>Takes notes during lectures, study groups, and while reading textbooks</li>
+                            <li>Color-codes subjects (blue for anatomy, green for pharmacology, etc.)</li>
+                            <li>Reviews notes late at night, needs dark mode to avoid eye strain</li>
+                            <li>Uses voice notes while walking between classes</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="persona-section">
+                        <h4>Pain Points</h4>
+                        <ul>
+                            <li>Previous apps make all notes look identical - hard to find specific topics</li>
+                            <li>Can't type fast enough to keep up with professors</li>
+                            <li>Switching between apps for different note types is inefficient</li>
+                            <li>White screens hurt eyes during late-night study sessions</li>
+                            <li>Needs both quick jots and detailed formatted notes in one place</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="persona-quote">
+                        "I have hundreds of notes from different classes. When everything looks the same, finding the right note becomes another study session. I need to see at a glance what's anatomy, what's pharmacology, what's urgent."
+                    </div>
+                </div>
+                
+                <!-- Persona 2: Professional User -->
+                <div class="persona-card fade-in">
+                    <div class="persona-header">
+                        <div class="persona-image">👨‍💼</div>
+                        <div class="persona-info">
+                            <h3>Tunde Williams</h3>
+                            <div class="persona-role">Creative Professional</div>
+                            <div class="persona-meta">32 years old • Content Creator • Lagos</div>
+                        </div>
+                    </div>
+                    
+                    <div class="persona-section">
+                        <h4>Motivations</h4>
+                        <ul>
+                            <li>Captures creative ideas whenever inspiration strikes</li>
+                            <li>Needs to organize content ideas, scripts, and project notes</li>
+                            <li>Wants rich formatting for scripts and structured content</li>
+                            <li>Values aesthetics - tools should inspire creativity, not hinder it</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="persona-section">
+                        <h4>Behaviors</h4>
+                        <ul>
+                            <li>Creates notes for video scripts, social media content, and project plans</li>
+                            <li>Uses checklists to track content production tasks</li>
+                            <li>Adds links to reference materials and research</li>
+                            <li>Works irregular hours - often writes late at night or early morning</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="persona-section">
+                        <h4>Pain Points</h4>
+                        <ul>
+                            <li>Basic notes apps lack formatting needed for scripts and structured content</li>
+                            <li>Word processors are overkill and too slow for quick idea capture</li>
+                            <li>Ideas come randomly - needs to capture them immediately before they're forgotten</li>
+                            <li>Struggles to visually distinguish between different project types</li>
+                            <li>Most apps have ugly dark modes that don't match their aesthetic</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="persona-quote">
+                        "Creative ideas don't follow office hours. I need an app that's fast enough to capture midnight inspiration but powerful enough to develop full scripts. And honestly, if it's not beautiful, I won't want to use it."
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Empathy Mapping -->
+    <section class="empathy-mapping">
+        <div class="empathy-container">
+            <h2 class="section-title">Empathy Mapping</h2>
+            <p class="section-subtitle">Deep dive into understanding the student note-taker's daily experience.</p>
+            
+            <div class="empathy-map fade-in">
+                <div class="empathy-header">
+                    <h3>Adaobi - The Organized Student</h3>
+                    <p>Understanding the academic note-taker's perspective</p>
+                </div>
+                
+                <div class="empathy-grid">
+                    <!-- Center Image - Placeholder for persona photo -->
+                    <div class="empathy-center-image">👩‍🎓</div>
+                    
+                    <div class="empathy-quadrant says">
+                        <h4>💬 Says</h4>
+                        <ul>
+                            <li>"I need to find my anatomy notes fast"</li>
+                            <li>"This lecture is too fast to type"</li>
+                            <li>"Where did I write that formula?"</li>
+                            <li>"My eyes hurt from the bright screen"</li>
+                            <li>"I wish I could just speak my notes"</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="empathy-quadrant thinks">
+                        <h4>💭 Thinks</h4>
+                        <ul>
+                            <li>If only notes were color-coded by subject</li>
+                            <li>I'm missing important points while typing</li>
+                            <li>These all look the same - so confusing</li>
+                            <li>I need a better organization system</li>
+                            <li>This app is too bright for late night studying</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="empathy-quadrant does">
+                        <h4>🏃 Does</h4>
+                        <ul>
+                            <li>Creates multiple notes daily across different subjects</li>
+                            <li>Scrolls through dozens of similar-looking notes to find content</li>
+                            <li>Types frantically during lectures to keep up</li>
+                            <li>Studies late at night with screen brightness at minimum</li>
+                            <li>Uses voice recorder separately then transcribes later</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="empathy-quadrant feels">
+                        <h4>❤️ Feels</h4>
+                        <ul>
+                            <li>Overwhelmed by volume of unorganized notes</li>
+                            <li>Frustrated by slow typing during fast-paced lectures</li>
+                            <li>Anxious about missing important information</li>
+                            <li>Eye strain from bright screens during night study</li>
+                            <li>Satisfied when finding notes quickly through color</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Flow -->
+    <section class="user-flow">
+        <div class="flow-container">
+            <h2 class="section-title">User Flow</h2>
+            <p class="section-subtitle">Streamlined journey from opening the app to creating rich, organized notes.</p>
+            
+            <div class="placeholder-flow">User Journey Flow Diagram</div>
+            <div class="flow-description">
+                <h3>User Journey Highlights:</h3>
+                <p>
+                    1. Launch app → See sample note with instructions on grid layout<br>
+                    2. Switch between grid and list view via hamburger menu<br>
+                    3. Search for specific notes using search bar<br>
+                    4. Long-press any note for quick preview with options (Share, Pin, Duplicate, Delete)<br>
+                    5. Tap plus button to create new note<br>
+                    6. In editor: Add heading and body text with rich formatting<br>
+                    7. Use formatting toolbar above keyboard:<br>
+                    &nbsp;&nbsp;&nbsp;• Bullet lists, Numbered lists, Checklists<br>
+                    &nbsp;&nbsp;&nbsp;• Add images, Add files, Insert links<br>
+                    &nbsp;&nbsp;&nbsp;• Undo/Redo buttons<br>
+                    8. Voice-to-text: Speak to type hands-free<br>
+                    9. Tap Done → Note saved with color and timestamp<br>
+                    10. Bulk actions: Select multiple notes to delete at once<br>
+                    11. Toggle light/dark mode in settings<br>
+                    12. Share app or rate via hamburger menu
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design System -->
+    <section class="design-system">
+        <div class="design-container">
+            <h2 class="section-title">Design System</h2>
+            <p class="section-subtitle">A vibrant, modern color palette with full light and dark mode support.</p>
+            
+            <div class="colors-section fade-in">
+                <h3>Colors</h3>
+                <p>Bold, distinctive colors that make organization visual and beautiful.</p>
+                <div class="colors-grid">
+                    <div class="color-card">
+                        <div class="color-preview" style="background: #0024CA;">#0024CA</div>
+                        <div class="color-info">
+                            <div class="color-name">Primary Blue</div>
+                            <div class="color-usage">Brand Color, Headers, CTAs</div>
+                        </div>
+                    </div>
+                    
+                    <div class="color-card">
+                        <div class="color-preview" style="background: #02C0B0;">#02C0B0</div>
+                        <div class="color-info">
+                            <div class="color-name">Teal</div>
+                            <div class="color-usage">Accents, Success States</div>
+                        </div>
+                    </div>
+                    
+                    <div class="color-card">
+                        <div class="color-preview" style="background: #C61260;">#C61260</div>
+                        <div class="color-info">
+                            <div class="color-name">Deep Pink</div>
+                            <div class="color-usage">Important Actions, Highlights</div>
+                        </div>
+                    </div>
+                    
+                    <div class="color-card">
+                        <div class="color-preview" style="background: #9612E4;">#9612E4</div>
+                        <div class="color-info">
+                            <div class="color-name">Purple Note</div>
+                            <div class="color-usage">Note Color Option</div>
+                        </div>
+                    </div>
+                    
+                    <div class="color-card">
+                        <div class="color-preview" style="background: #FF7318;">#FF7318</div>
+                        <div class="color-info">
+                            <div class="color-name">Orange Note</div>
+                            <div class="color-usage">Note Color Option</div>
+                        </div>
+                    </div>
+                    
+                    <div class="color-card">
+                        <div class="color-preview" style="background: #EEC001;">#EEC001</div>
+                        <div class="color-info">
+                            <div class="color-name">Yellow Note</div>
+                            <div class="color-usage">Note Color Option</div>
+                        </div>
+                    </div>
+                    
+                    <div class="color-card">
+                        <div class="color-preview" style="background: #01A516;">#01A516</div>
+                        <div class="color-info">
+                            <div class="color-name">Green Note</div>
+                            <div class="color-usage">Note Color Option</div>
+                        </div>
+                    </div>
+                    
+                    <div class="color-card">
+                        <div class="color-preview" style="background: #D90303;">#D90303</div>
+                        <div class="color-info">
+                            <div class="color-name">Red Note</div>
+                            <div class="color-usage">Note Color Option</div>
+                        </div>
+                    </div>
+                    
+                    <div class="color-card">
+                        <div class="color-preview" style="background: #FF017A;">#FF017A</div>
+                        <div class="color-info">
+                            <div class="color-name">Pink Note</div>
+                            <div class="color-usage">Note Color Option</div>
+                        </div>
+                    </div>
+
+                    <div class="color-card">
+                        <div class="color-preview" style="background: #1E1E1E;">#1E1E1E</div>
+                        <div class="color-info">
+                            <div class="color-name">Dark Grey Note</div>
+                            <div class="color-usage">Default Note Color Option (Dark Mode)</div>
+                        </div>
+                    </div>
+
+                    <div class="color-card">
+                        <div class="color-preview" style="background: #D9D9D9;">#D9D9D9</div>
+                        <div class="color-info">
+                            <div class="color-name">Light Grey Note</div>
+                            <div class="color-usage">Default Note Color Option (Light Mode)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="typography-section fade-in">
+                <h3>Typography</h3>
+                <p>Martel Sans - A clean, modern sans-serif font optimized for readability.</p>
+                <div class="typography-showcase">
+                    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; align-items: center;">
+                        <div>
+                            <div style="font-size: 20px; font-weight: 800; margin-bottom: 1rem; color: #1a1a1a;">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+                            <div style="font-size: 20px; font-weight: 800; margin-bottom: 1rem; color: #1a1a1a;">abcdefghijklmnopqrstuvwxyz</div>
+                            <div style="font-size: 20px; font-weight: 800; color: #1a1a1a;">0123456789</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="margin-bottom: 0.8rem; color: #666; font-size: 16px;">Regular</div>
+                            <div style="margin-bottom: 0.8rem; color: #666; font-size: 16px; font-weight: 600;">Semi-Bold</div>
+                            <div style="color: #666; font-size: 16px; font-weight: 800;">Bold</div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 3rem; padding-top: 3rem; border-top: 2px solid #e9ecef;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <span style="color: #999; font-size: 14px;">Heading Sizes</span>
+                            <span style="color: #999; font-size: 14px;">20px - 10px range</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features -->
+    <section class="key-features">
+        <div class="features-container">
+            <h2 class="section-title">Key Features</h2>
+            <p class="section-subtitle">Thoughtfully designed features that balance power with simplicity.</p>
+            
+            <div class="feature-item fade-in">
+                <div class="feature-text">
+                    <h3>Color-Coded Visual Organization</h3>
+                    <p>Every note can be assigned one of seven vibrant colors (blue, purple, orange, yellow, green, red, pink), making it instantly recognizable. Students can color-code by subject, professionals by project, anyone by priority. Combined with grid and list view options, finding the right note becomes visual and intuitive rather than a search exercise.</p>
+                </div>
+                <div>
+                    <div class="placeholder-feature"><img src="images/color-grid.png" alt="color grid" class="placeholder-feature"></div>
+                </div>
+            </div>
+            
+            <div class="feature-item fade-in">
+                <div class="feature-text">
+                    <h3>Rich Text Editor</h3>
+                    <p>Create beautifully formatted notes with everything you need: headings, bold/italic text, bullet lists, numbered lists, interactive checklists, embedded images, attached files, and clickable links. The formatting toolbar sits conveniently above the keyboard for instant access without interrupting your flow. Undo and redo buttons ensure mistakes are never permanent.</p>
+                </div>
+                <div>
+                    <div class="placeholder-feature"><img src="images/editor.png" alt="editor" class="placeholder-feature"></div>
+                </div>
+            </div>
+            
+            <div class="feature-item fade-in">
+                <div class="feature-text">
+                    <h3>Voice-to-Text Capture</h3>
+                    <p>Speak your thoughts and watch them appear as text instantly. Perfect for capturing ideas while walking, driving, or when typing would be too slow. Currently integrates with device speech recognition, with custom in-app implementation in development for more accurate, uninterrupted transcription that doesn't stop mid-sentence.</p>
+                </div>
+                <div>
+                    <div class="placeholder-feature"><img src="images/voice-input-editor.png" alt="voice input editor" class="placeholder-feature"></div>
+                </div>
+            </div>
+            
+            <div class="feature-item fade-in">
+                <div class="feature-text">
+                    <h3>Quick Preview & Actions</h3>
+                    <p>Long-press any note to see an instant preview without opening the full editor. The preview modal shows the note's heading and body text, plus quick actions: Share the note via any app, Pin/Unpin to keep important notes at the top, Duplicate to create copies for templates, or Delete when no longer needed. Actions without opening reduce friction significantly.</p>
+                </div>
+                <div>
+                    <div class="placeholder-feature"><img src="images/preview-modal.png" alt="preview modal" class="placeholder-feature"></div>
+                </div>
+            </div>
+            
+            <div class="feature-item fade-in">
+                <div class="feature-text">
+                    <h3>Full Dark Mode</h3>
+                    <p>Not just inverted colors - a carefully designed dark theme where colorful notes pop against deep backgrounds. Perfect for late-night work, early morning thoughts, or anyone who prefers reduced eye strain. Toggle instantly in settings. Both themes are equally polished, not an afterthought, making LumiMemo comfortable to use 24/7.</p>
+                </div>
+                <div>
+                    <div class="placeholder-feature"><img src="images/dark-mode.png" alt="dark mode" class="placeholder-feature"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- UI Screens -->
+    <section class="ui-screens">
+        <div class="screens-container">
+            <h2 class="section-title">User Interface Showcase</h2>
+            <p class="section-subtitle">High-fidelity screens in both light and dark modes showcasing the complete experience.</p>
+            
+            <div class="screens-category fade-in">
+                <h3>Main Views (Dark Mode)</h3>
+                <div class="screens-grid">
+                    <div class="screen-card">
+                        <div class="placeholder-screen"><img src="images/grid.png" alt="grid" class="placeholder-feature"></div>
+                        <div class="screen-name">Grid View</div>
+                    </div>
+                    <div class="screen-card">
+                        <div class="placeholder-screen"><img src="images/list.png" alt="list" class="placeholder-feature"></div>
+                        <div class="screen-name">List View</div>
+                    </div>
+                    <div class="screen-card">
+                        <div class="placeholder-screen"><img src="images/menu.png" alt="menu" class="placeholder-feature"></div>
+                        <div class="screen-name">Menu</div>
+                    </div>
+                    <div class="screen-card">
+                        <div class="placeholder-screen"><img src="images/search.png" alt="search" class="placeholder-feature"></div>
+                        <div class="screen-name">Search</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="screens-category fade-in">
+                <h3>Editor & Actions (Dark Mode)</h3>
+                <div class="screens-grid">
+                    <div class="screen-card">
+                        <div class="placeholder-screen"><img src="images/rich-text-editor.png" alt="rich-text-editor" class="placeholder-feature"></div>
+                        <div class="screen-name">Rich Text Editor</div>
+                    </div>
+                    <div class="screen-card">
+                        <div class="placeholder-screen"><img src="images/toolbar.png" alt="toolbar" class="placeholder-feature"></div>
+                        <div class="screen-name">Formatting Toolbar</div>
+                    </div>
+                    <div class="screen-card">
+                        <div class="placeholder-screen"><img src="images/preview-dark.png" alt="preview dark" class="placeholder-feature"></div>
+                        <div class="screen-name">Long Press Preview</div>
+                    </div>
+                    <div class="screen-card">
+                        <div class="placeholder-screen"><img src="images/delete-modal.png" alt="delete modal" class="placeholder-feature"></div>
+                        <div class="screen-name">Delete Modal</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="screens-category fade-in">
+                <h3>Light Mode Views</h3>
+                <div class="screens-grid">
+                    <div class="screen-card">
+                        <div class="placeholder-screen"><img src="images/grid-light.png" alt="grid light" class="placeholder-feature"></div>
+                        <div class="screen-name">Voice Input</div>
+                        <div class="screen-name">Grid View Light</div>
+                    </div>
+                    <div class="screen-card">
+                        <div class="placeholder-screen"><img src="images/list-light.png" alt="list light" class="placeholder-feature"></div>
+                        <div class="screen-name">Voice Input</div>
+                        <div class="screen-name">List View Light</div>
+                    </div>
+                    <div class="screen-card">
+                        <div class="placeholder-screen"><img src="images/editor-light.png" alt="editor light" class="placeholder-feature"></div>
+                        <div class="screen-name">Voice Input</div>
+                        <div class="screen-name">Editor Light</div>
+                    </div>
+                    <div class="screen-card">
+                        <div class="placeholder-screen"><img src="images/bulk-select.png" alt="bulk select" class="placeholder-feature"></div>
+                        <div class="screen-name">Voice Input</div>
+                        <div class="screen-name">Bulk Select</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Outcomes & Reflection -->
+    <section class="outcomes">
+        <div class="outcomes-container">
+            <h2 class="section-title">Project Outcomes</h2>
+            <p class="section-subtitle">Creating a notepad that users actually enjoy using every day.</p>
+            
+            <div class="outcomes-grid">
+                <div class="outcome-stat fade-in">
+                    <div class="outcome-number">7</div>
+                    <div class="outcome-label">Note Colors</div>
+                </div>
+                <div class="outcome-stat fade-in">
+                    <div class="outcome-number">2</div>
+                    <div class="outcome-label">View Modes</div>
+                </div>
+                <div class="outcome-stat fade-in">
+                    <div class="outcome-number">100%</div>
+                    <div class="outcome-label">Visual Organization</div>
+                </div>
+            </div>
+            
+            <div class="reflection fade-in">
+                <h3>Key Learnings & Reflections</h3>
+                <p>
+                    The biggest design challenge with LumiMemo was balancing power with simplicity. Every notepad app faces this tension - add too few features and it's limiting, add too many and it becomes overwhelming. The solution came from understanding that users don't want features for features' sake - they want capabilities that solve real problems.
+                    <br><br>
+                    Color-coding solved the "all my notes look the same" problem. Voice input solved the "typing is too slow" problem. The rich text editor solved the "I need formatting but not a word processor" problem. Grid and list views solved the "different tasks need different perspectives" problem. Each feature had a clear purpose backed by user pain points, not just a checklist of "things notes apps should have."
+                    <br><br>
+                    The dark mode taught me an important lesson about design polish. Initially, I planned to just invert colors - that's what most apps do. But testing it late at night showed how jarring inverted colors actually look. A proper dark mode isn't automatic - it requires redesigning the entire color system. The vibrant note colors needed different luminosity levels to pop against dark backgrounds versus light ones. The result is two complete themes, not one theme with an invert filter.
+                    <br><br>
+                    The ongoing voice-to-text implementation is teaching me about the importance of not shipping until it's right. The device's default speech recognition works, but it stops mid-sentence and requires manual activation each time. This breaks the hands-free promise. Rather than launch with a mediocre experience, I'm building custom speech-to-text that stays active and handles natural pauses correctly. Sometimes "good enough" isn't good enough when it's a core feature.
+                    <br><br>
+                    Looking forward, I want to explore collaborative features - real-time note sharing and editing for study groups and teams. Smart categorization using AI to auto-suggest colors based on content. And cross-platform sync so notes are truly everywhere users need them. But first, I'm focused on perfecting the single-player experience, because no amount of collaboration features will save an app that isn't delightful to use alone.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Interested in This Project?</h2>
+            <p>Let's discuss how I design and build apps that balance beauty with functionality.</p>
+            <div class="cta-buttons">
+                <a href="contact.html" class="btn btn-primary">Get in Touch</a>
+                <a href="work.html" class="btn btn-secondary">View More Projects</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Theresa Onochieumeh</h3>
+                <p>Product Designer & Developer</p>
+            </div>
+            <div class="footer-section">
+                <h3>Links</h3>
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="work.html">Work</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <a href="mailto:theresaonochieumeh@gmail.com">Email</a>
+                <a href="https://www.linkedin.com/in/theresa-onochieumeh-a77094230" target="_blank">LinkedIn</a>
+                <a href="https://www.behance.net/theresaonochieumeh" target="_blank">Behance</a>
+            </div>
+        </div>
+        <p style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); color: #808080;">&copy; 2026 Theresa Onochieumeh</p>
+    </footer>
+
+    <script>
+        // Scroll Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Work - Theresa Onochieumeh</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 5%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff1493, #1e3a8a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 3rem;
+        }
+        
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover, nav a.active {
+            color: #ff1493;
+        }
+        
+        .page-header {
+            padding: 10rem 5% 4rem;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 4rem;
+            background: linear-gradient(135deg, #ff1493, #1e3a8a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            color: #808080;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 3rem 5%;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 0.8rem 2rem;
+            background: transparent;
+            border: 2px solid rgba(255, 20, 147, 0.3);
+            color: #ffffff;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: rgba(255, 20, 147, 0.2);
+            border-color: #ff1493;
+        }
+        
+        .work-section {
+            padding: 2rem 5% 6rem;
+        }
+        
+        .category-title {
+            font-size: 2rem;
+            color: #ff1493;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        
+        .work-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto 5rem;
+        }
+        
+        .work-card {
+            background: #111111;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s;
+            cursor: pointer;
+            opacity: 1;
+            transform: scale(1);
+            flex: 0 0 calc(33.333% - 2rem);  /* Fixed width - always 3 columns */
+            max-width: calc(33.333% - 2rem);
+
+        }
+        
+        .work-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(255, 20, 147, 0.4);
+            border-color: rgba(255, 20, 147, 0.6);
+        }
+        
+        .work-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, rgba(255, 20, 147, 0.3), rgba(30, 58, 138, 0.3));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .work-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%px;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 20, 147, 0.1) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+        
+        .work-card:hover .work-image::after {
+            transform: translateX(100%);
+        }
+        
+        .work-content {
+            padding: 2rem;
+        }
+        
+        .work-content h3 {
+            color: #ff1493;
+            margin-bottom: 1rem;
+            font-size: 1.6rem;
+        }
+        
+        .work-content p {
+            color: #b0b0b0;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tags {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        
+        .tag {
+            padding: 0.5rem 1rem;
+            background: rgba(30, 58, 138, 0.5);
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+        
+        .view-case-study {
+            display: inline-block;
+            margin-top: 1rem;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .view-case-study:hover {
+            color: #ff1493;
+        }
+        
+        footer {
+            padding: 3rem 5%;
+            background: #111111;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+        
+        .footer-section h3 {
+            color: #ff1493;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-section a {
+            color: #808080;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: #ff1493;
+        }
+
+        @media (max-width: 1200px) {
+            .work-card {
+                flex: 0 0 calc(50% - 1.5rem);
+                max-width: calc(50% - 1.5rem);
+            }
+        }
+
+        
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            .work-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .work-card {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">Theresa .O. Onochieumeh</a>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="work.html" class="active">Work</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="page-header">
+        <h1>My Work</h1>
+        <p>A collection of projects showcasing my design and development expertise across various platforms and industries</p>
+    </div>
+    
+    <div class="filter-tabs">
+        <button class="filter-btn active">All Projects</button>
+        <button class="filter-btn">Web Development</button>
+        <button class="filter-btn">UX/UI Design</button>
+        <button class="filter-btn">Mobile Apps Development</button>
+        <button class="filter-btn">AI Automation</button>
+    </div>
+    
+    <section class="work-section">
+        <h2 class="category-title">Personal Projects</h2>
+        <div class="work-grid">
+            <div class="work-card">
+                <div class="work-image"><img src="images/lumispend.png" alt="LumiSpend" class="work-image"></div>
+                <div class="work-content">
+                    <h3>LumiSpend Expense Tracker Mobile App </h3>
+                    <p>Complete mobile banking experience with intuitive design, seamless user flow, and modern financial features designed to empower users.</p>
+                    <div class="tags">
+                        <span class="tag">Product Design</span>
+                        <span class="tag">Mobile Development</span>
+                        <span class="tag">Mobile App</span>
+                        <span class="tag">Fintech</span>
+                    </div>
+                    <a href="#" class="view-case-study">View Full Case Study →</a>
+                </div>
+            </div>
+            
+            <div class="work-card">
+                <div class="work-image"><img src="images/chividrink.png" alt="ChiviDrink" class="work-image"></div>
+                <div class="work-content">
+                    <h3>ChiviDrink Website</h3>
+                    <p>Music streaming platform featuring engaging UI, personalized playlists, and smooth user experience for music lovers.</p>
+                    <div class="tags">
+                        <span class="tag">UI Design</span>
+                        <span class="tag">Ecommerce Website</span>
+                        <span class="tag">Beverage</span>
+                    </div>
+                    <a href="#" class="view-case-study">View Full Case Study →</a>
+                </div>
+            </div>
+            
+            <div class="work-card">
+                <div class="work-image"><img src="images/lumimemo.png" alt="LumiMemo" class="work-image"></div>
+                <div class="work-content">
+                    <h3>LumiMemo Mobile App</h3>
+                    <p>On-demand car wash booking application with location-based services, scheduling, and payment integration.</p>
+                    <div class="tags">
+                        <span class="tag">Product Design</span>
+                        <span class="tag">Mobile Development</span>
+                        <span class="tag">Mobile App</span>
+                        <span class="tag">Utility</span>
+                    </div>
+                    <a href="#" class="view-case-study">View Full Case Study →</a>
+                </div>
+            </div>
+        </div>
+        
+        <h2 class="category-title">Client Projects</h2>
+        <div class="work-grid">
+
+            <div class="work-card">
+                <div class="work-image"><img src="images/kolisa.png" alt="Palmera" class="work-image"></div>
+                <div class="work-content">
+                    <h3>Kolisa Microfinance Bank Website</h3>
+                    <p>Refreshing landing page design for beverage brand with engaging animations and conversion-focused layout.</p>
+                    <div class="tags">
+                        <span class="tag">Web Development</span>
+                        <span class="tag">Wordpress</span>
+                        <span class="tag">Fintech</span>
+                    </div>
+                    <a href="https://www.behance.net/gallery/230555754" target="_blank" class="view-case-study">View on Behance →</a>
+                </div>
+            </div>
+
+            <div class="work-card">
+                <div class="work-image"><img src="images/panicalert.png" alt="Palmera" class="work-image"></div>
+                <div class="work-content">
+                    <h3>Panic Alert Website</h3>
+                    <p>Refreshing landing page design for beverage brand with engaging animations and conversion-focused layout.</p>
+                    <div class="tags">
+                        <span class="tag">Web Development</span>
+                        <span class="tag">Wordpress</span>
+                        <span class="tag">Security</span>
+                    </div>
+                    <a href="https://www.behance.net/gallery/230555754" target="_blank" class="view-case-study">View on Behance →</a>
+                </div>
+            </div>
+
+            <div class="work-card">
+                <div class="work-image"><img src="images/appfocus.png" alt="Palmera" class="work-image"></div>
+                <div class="work-content">
+                    <h3>Appfocus Microfinance Bank Website</h3>
+                    <p>Refreshing landing page design for beverage brand with engaging animations and conversion-focused layout.</p>
+                    <div class="tags">
+                        <span class="tag">Web Development</span>
+                        <span class="tag">Wordpress</span>
+                        <span class="tag">Fintech</span>
+                    </div>
+                    <a href="https://www.behance.net/gallery/230555754" target="_blank" class="view-case-study">View on Behance →</a>
+                </div>
+            </div>
+
+            <div class="work-card">
+                <div class="work-image"><img src="images/palgo.png" alt="PalGo" class="work-image"></div>
+                <div class="work-content">
+                    <h3>PalGo Errand Service Mobile App</h3>
+                    <p>Delightful hero section design for a bakery brand, featuring vibrant colors and appetizing visuals that capture the brand's essence.</p>
+                    <div class="tags">
+                        <span class="tag">Product Design</span>
+                        <span class="tag">Mobile App</span>
+                        <span class="tag">Errand Service</span>
+                    </div>
+                    <a href="https://www.behance.net/gallery/224400579" target="_blank" class="view-case-study">View on Behance →</a>
+                </div>
+            </div>
+            
+            <div class="work-card">
+                <div class="work-image"><img src="images/palmera.png" alt="Palmera" class="work-image"></div>
+                <div class="work-content">
+                    <h3>Palmera Microfinance Bank App</h3>
+                    <p>Refreshing landing page design for beverage brand with engaging animations and conversion-focused layout.</p>
+                    <div class="tags">
+                        <span class="tag">Product Design</span>
+                        <span class="tag">Mobile App</span>
+                        <span class="tag">Fintech</span>
+                    </div>
+                    <a href="https://www.behance.net/gallery/230555754" target="_blank" class="view-case-study">View on Behance →</a>
+                </div>
+            </div>
+            
+            <div class="work-card">
+                <div class="work-image"><img src="images/console.png" alt="console" class="work-image"></div>
+                <div class="work-content">
+                    <h3>Management Console Web App</h3>
+                    <p>Full-featured banking application for microfinance services with focus on accessibility and user trust.</p>
+                    <div class="tags">
+                        <span class="tag">UX/UI Design</span>
+                        <span class="tag">Web App</span>
+                        <span class="tag">Fintech</span>
+                    </div>
+                    <a href="https://www.behance.net/gallery/227944319" target="_blank" class="view-case-study">View on Behance →</a>
+                </div>
+            </div>    
+        </div>
+        
+        <h2 class="category-title">Lumi Apps Projects</h2>
+        <div class="work-grid">
+            <div class="work-card">
+                <div class="work-image"><img src="images/lumiapps.png" alt="Palmera" class="work-image"></div>
+                <div class="work-content">
+                    <h3>Lumi Utility Suite</h3>
+                    <p>Collection of productivity applications designed to simplify daily tasks with elegant interfaces and powerful functionality.</p>
+                    <div class="tags">
+                        <span class="tag">Product Design</span>
+                        <span class="tag">Mobile Development</span>
+                        <span class="tag">Mobile App</span>
+                        <span class="tag">iOS/Android</span>
+                    </div>
+                    <a href="#" class="view-case-study">View Project Details →</a>
+                </div>
+            </div>
+            
+            <div class="work-card">
+                <div class="work-image"><img src="images/ecommerce.png" alt="Palmera" class="work-image"></div>
+                <div class="work-content">
+                    <h3>E-commerce Platform</h3>
+                    <p>Custom WordPress e-commerce solution with optimized conversion design, payment integration, and inventory management.</p>
+                    <div class="tags">
+                        <span class="tag">WordPress</span>
+                        <span class="tag">Web Development</span>
+                        <span class="tag">E-commerce</span>
+                    </div>
+                    <a href="#" class="view-case-study">View Case Study →</a>
+                </div>
+            </div>
+            
+            <div class="work-card">
+                <div class="work-image"><img src="images/aiautomation.png" alt="Palmera" class="work-image"></div>
+                <div class="work-content">
+                    <h3>AI Workflow Automation</h3>
+                    <p>Intelligent automation system using n8n to streamline business processes and reduce manual work by 60%.</p>
+                    <div class="tags">
+                        <span class="tag">AI Automation</span>
+                        <span class="tag">n8n</span>
+                        <span class="tag">Integration</span>
+                    </div>
+                    <a href="#" class="view-case-study">View Case Study →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Theresa Onochieumeh</h3>
+                <p style="color: #808080;">Product Designer & Developer</p>
+            </div>
+            <div class="footer-section">
+                <h3>Links</h3>
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="work.html">Work</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <a href="mailto:theresaonochieumeh@gmail.com">Email</a>
+                <a href="https://www.linkedin.com/in/theresa-onochieumeh-a77094230" target="_blank">LinkedIn</a>
+                <a href="https://www.behance.net/theresaonochieumeh" target="_blank">Behance</a>
+            </div>
+        </div>
+        <p style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); color: #808080;">&copy; 2026 Theresa Onochieumeh</p>
+    </footer>
+    
+    <script>
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const workCards = document.querySelectorAll('.work-card');
+    
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active class from all buttons
+            filterBtns.forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            btn.classList.add('active');
+            
+            const filterCategory = btn.textContent.trim();
+            
+            workCards.forEach(card => {
+                const tags = card.querySelectorAll('.tag');
+                let shouldShow = false;
+                
+                // Check if "All Projects" is selected
+                if (filterCategory === 'All Projects') {
+                    shouldShow = true;
+                } else {
+                    // Check each tag in the card
+                    tags.forEach(tag => {
+                        const tagText = tag.textContent.trim();
+                        
+                        if (filterCategory === 'UX/UI Design' && 
+                            (tagText.includes('UX') || tagText.includes('UI') || 
+                             tagText.includes('Product Design'))) {
+                            shouldShow = true;
+                        }
+                        
+                        if (filterCategory === 'Web Development' && 
+                            (tagText.includes('Web Development') || tagText.includes('WordPress'))) {
+                            shouldShow = true;
+                        }
+                        
+                        if (filterCategory === 'Mobile Apps Development' && 
+                            tagText.includes('Mobile Development')) {
+                            shouldShow = true;
+                        }
+                        
+                        if (filterCategory === 'AI Automation' && 
+                            (tagText.includes('AI Automation') || tagText.includes('n8n'))) {
+                            shouldShow = true;
+                        }
+                    });
+                }
+                
+                // Show or hide the card with animation
+                if (shouldShow) {
+                    card.style.display = 'block';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'scale(1)';
+                    }, 10);
+                } else {
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, 300);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
