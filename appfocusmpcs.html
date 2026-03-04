@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AppFocus Cooperative Society - Case Study | Theresa Onochieumeh</title>
+    <link href="https://fonts.googleapis.com/css2?family=Martel+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Martel Sans', 'Segoe UI', sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation - Dark theme */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 5%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff1493, #1e3a8a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 3rem;
+        }
+        
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        nav a:hover, nav a.active {
+            color: #ff1493;
+        }
+        
+        /* Hero Section - Matching LumiMemo style */
+        .hero {
+            padding: 120px 5% 80px;
+            background: linear-gradient(135deg, #E86036 0%, #FF0000 50%, #E86036 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.08) 0%, transparent 50%);
+            opacity: 0.5;
+        }
+        
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+        }
+        
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .project-meta {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .meta-item {
+            text-align: center;
+        }
+        
+        .meta-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .meta-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        /* Hero Image */
+        .hero-image {
+            margin-top: 4rem;
+            padding: 0 5%;
+        }
+        
+        .placeholder-hero {
+            width: 100%;
+            max-width: 1200px;
+            height: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+        
+        .placeholder-hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+        
+        /* Content Sections */
+        .content-section {
+            padding: 100px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #E86036;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 3rem;
+            max-width: 800px;
+            line-height: 1.8;
+        }
+        
+        /* Challenge & Solution */
+        .challenge-solution {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 100px 5%;
+        }
+        
+        .challenge-solution-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 4rem;
+        }
+        
+        .challenge-box, .solution-box {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .challenge-box h2, .solution-box h2 {
+            color: #E86036;
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+        }
+        
+        .challenge-box p, .solution-box p {
+            color: #555;
+            line-height: 1.9;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .challenge-box ul, .solution-box ul {
+            margin-top: 1.5rem;
+            list-style: none;
+        }
+        
+        .challenge-box li, .solution-box li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            color: #555;
+            line-height: 1.7;
+        }
+        
+        .challenge-box li::before {
+            content: '✗';
+            position: absolute;
+            left: 0;
+            color: #ff4757;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .solution-box li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #019c0e;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        /* Design Process */
+        .design-process {
+            padding: 100px 5%;
+            background: white;
+        }
+        
+        .process-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .process-placeholder {
+            width: 100%;
+            max-width: 1200px;
+            height: 400px;
+            margin: 3rem auto 2rem;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #999;
+            border: 3px dashed #ddd;
+        }
+        
+        .process-description {
+            max-width: 800px;
+            margin: 2rem auto;
+            color: #555;
+            line-height: 1.9;
+            font-size: 1.1rem;
+        }
+        
+        .process-description p {
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Tech Stack */
+        .tech-stack-section {
+            padding: 100px 5%;
+            background: #f8f9fa;
+        }
+        
+        .tech-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .tech-tag {
+            padding: 0.8rem 1.5rem;
+            background: #E86036;
+            color: white;
+            border-radius: 50px;
+            font-size: 0.95rem;
+        }
+        
+        /* Key Features */
+        .key-features {
+            padding: 100px 5%;
+            background: white;
+        }
+        
+        .features-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-card {
+            background: #f8f9fa;
+            padding: 2.5rem;
+            border-radius: 15px;
+            transition: all 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(30, 58, 138, 0.15);
+        }
+        
+        .feature-card h4 {
+            color: #E86036;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .feature-card p {
+            color: #555;
+            line-height: 1.7;
+        }
+        
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #E86036;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: #555;
+            font-size: 1rem;
+        }
+        
+        /* Outcomes */
+        .outcomes {
+            padding: 100px 5%;
+            background: #f8f9fa;
+        }
+        
+        .outcomes-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .reflection {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            margin-top: 4rem;
+            border-left: 4px solid #E86036;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .reflection h3 {
+            color: #E86036;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .reflection p {
+            color: #555;
+            line-height: 1.9;
+            font-size: 1.1rem;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 5%;
+            background: linear-gradient(135deg, #E86036 0%, #FF0000 50%, #E86036 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cta-section h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: #E86036;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: #E86036;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 3rem 5%;
+            background: #111111;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+        
+        .footer-section h3 {
+            color: #ff1493;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-section p, .footer-section a {
+            color: #808080;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: #ff1493;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .challenge-solution-content {
+                grid-template-columns: 1fr;
+            }
+            nav ul {
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="work.html" class="logo">Theresa .O. Onochieumeh</a>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="work.html">Work</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>AppFocus Cooperative Society</h1>
+            <p>A comprehensive digital platform empowering 23,000+ Nigerians with accessible financial services</p>
+            
+            <div class="project-meta">
+                <div class="meta-item">
+                    <div class="meta-label">Role</div>
+                    <div class="meta-value">Web Developer & Designer</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Duration</div>
+                    <div class="meta-value">8 Weeks</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Platform</div>
+                    <div class="meta-value">Web (WordPress)</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Tools</div>
+                    <div class="meta-value">WordPress, Vs Code, Figma</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="hero-image">
+            <div class="placeholder-hero">
+                <img src="images/appfocus-hero.png" alt="AppFocus Website">
+            </div>
+        </div>
+    </section>
+    
+    <!-- Project Overview -->
+    <section class="content-section">
+        <h2 class="section-title">Project Overview</h2>
+        <p class="section-subtitle">AppFocus Cooperative Multi-Purpose Society needed a modern, trustworthy digital presence to serve their 23,000+ members across Nigeria. As a financial cooperative offering loans, savings, investments, and payments, they required a website that would build credibility, educate members about their services, and provide easy access to their mobile app and USSD banking.</p>
+        
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">23,000+</div>
+                <div class="stat-label">Active Members</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">₦2.5B+</div>
+                <div class="stat-label">Funds Disbursed</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">12%</div>
+                <div class="stat-label">Savings Interest</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Customer Support</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Challenge & Solution -->
+    <section class="challenge-solution">
+        <div class="challenge-solution-content">
+            <div class="challenge-box">
+                <h2>The Challenge</h2>
+                <p>AppFocus needed to establish a strong digital presence that would:</p>
+                <ul>
+                    <li>Build trust as a legitimate financial cooperative</li>
+                    <li>Clearly explain cooperative membership benefits</li>
+                    <li>Showcase multiple financial products (loans, savings, investments)</li>
+                    <li>Highlight unique features like USSD banking (*7006*19#)</li>
+                    <li>Drive mobile app downloads</li>
+                    <li>Present social proof through member testimonials</li>
+                </ul>
+            </div>
+            
+            <div class="solution-box">
+                <h2>The Solution</h2>
+                <p>I developed a custom WordPress website featuring:</p>
+                <ul>
+                    <li>Modern, trust-building design with blue/purple brand colors</li>
+                    <li>Dedicated product pages for each service</li>
+                    <li>Member testimonials carousel</li>
+                    <li>Clear 3-step onboarding flow</li>
+                    <li>USSD banking prominently featured</li>
+                    <li>Mobile app download CTAs</li>
+                    <li>Comprehensive FAQ and help center</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Design Process -->
+    <section class="design-process">
+        <div class="process-container">
+            <h2 class="section-title">Design Process</h2>
+            <p class="section-subtitle">A methodical approach to creating a trustworthy financial platform</p>
+            
+            <div class="process-placeholder">
+                Design Process Diagram
+            </div>
+            
+            <div class="process-description">
+                <p><strong>1. Research & Understanding:</strong> Studied the cooperative society model and identified key differentiators from traditional banks. Analyzed member needs and pain points in accessing financial services.</p>
+                
+                <p><strong>2. Content Strategy:</strong> Organized information architecture around Products, Company, and Resources. Emphasized trust signals like member count, funds disbursed, and testimonials.</p>
+                
+                <p><strong>3. Visual Design:</strong> Created a professional design system using blue/purple gradients to convey trust and innovation. Designed custom icons and graphics for each financial product.</p>
+                
+                <p><strong>4. Development:</strong> Built on WordPress with custom Elementor components. Implemented smooth animations, testimonial carousels, and responsive mobile design.</p>
+                
+                <p><strong>5. Optimization:</strong> Ensured fast loading times, mobile responsiveness, and clear calls-to-action for app downloads and member registration.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Tech Stack -->
+    <section class="tech-stack-section">
+        <div class="tech-container">
+            <h2 class="section-title">Tech Stack & Tools</h2>
+            <div class="tech-stack">
+                <span class="tech-tag">WordPress</span>
+                <span class="tech-tag">Local</span>
+                <span class="tech-tag">Vs Code</span>
+                <span class="tech-tag">HTML</span>
+                <span class="tech-tag">Custom CSS</span>
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">Figma (Icons & Image Design)</span>
+                <span class="tech-tag">Canva</span>
+                <span class="tech-tag">Lottie</span>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Key Features -->
+    <section class="key-features">
+        <div class="features-container">
+            <h2 class="section-title">Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h4>📱 Multi-Product Showcase</h4>
+                    <p>Created detailed pages for Personal Accounts, Loans, Savings, Investments, Payments, and USSD banking with clear benefits and features</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>🎨 Trust-Building Design</h4>
+                    <p>Professional blue/purple color scheme with custom graphics reinforcing credibility and financial security</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>💬 Social Proof</h4>
+                    <p>Integrated testimonials carousel showcasing real member experiences across different regions of Nigeria</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>📞 USSD Banking Highlight</h4>
+                    <p>Prominently featured *7006*19# code for internet-free banking access, crucial for Nigerian market</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>📲 App Download Focus</h4>
+                    <p>Strategic placement of App Store and Google Play download buttons throughout the site</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>✓ Simple Onboarding</h4>
+                    <p>Clear 3-step process (Sign Up → Verify → Start Growing) reducing friction for new members</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Outcomes -->
+    <section class="outcomes">
+        <div class="outcomes-container">
+            <h2 class="section-title">Results & Impact</h2>
+            
+            <div class="reflection">
+                <h3>Key Outcomes</h3>
+                <p>The website successfully positioned AppFocus as a credible, modern financial cooperative. By establishing a professional digital presence, the platform clearly differentiated AppFocus from traditional banks while highlighting unique value propositions like USSD banking, quick loans, and high savings interest rates.</p>
+                <p style="margin-top: 1.5rem;">Trust was built through prominent member testimonials and transparent information about the cooperative's 23,000+ active members and ₦2.5B+ in disbursed funds. Clear pathways for app downloads and member registration, combined with a fully responsive design, ensured accessibility across all devices and improved member acquisition.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Visit Live Website</h2>
+            <p>Explore the full website and see how it serves 23,000+ members</p>
+            <div class="cta-buttons">
+                <a href="https://appfocusng.com/" target="_blank" class="btn btn-primary">View Live Site</a>
+                <a href="work.html" class="btn btn-secondary">More Projects</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Theresa Onochieumeh</h3>
+                <p>Product Designer & Developer</p>
+            </div>
+            <div class="footer-section">
+                <h3>Links</h3>
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="work.html">Work</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <a href="mailto:theresaonochieumeh@gmail.com">Email</a>
+                <a href="https://www.linkedin.com/in/theresa-onochieumeh-a77094230" target="_blank">LinkedIn</a>
+                <a href="https://www.behance.net/theresaonochieumeh" target="_blank">Behance</a>
+            </div>
+        </div>
+        <p style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); color: #808080;">&copy; 2026 Theresa Onochieumeh</p>
+    </footer>
+</body>
+</html>
